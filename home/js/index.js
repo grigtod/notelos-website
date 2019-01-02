@@ -1342,41 +1342,110 @@ var _App2 = _interopRequireDefault(_App);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var canvasOne = document.getElementById('arapp'); /*
-                                                   * Copyright 2017 Google Inc. All Rights Reserved.
-                                                   * Licensed under the Apache License, Version 2.0 (the 'License');
-                                                   * you may not use this file except in compliance with the License.
-                                                   * You may obtain a copy of the License at
-                                                   *
-                                                   *     http://www.apache.org/licenses/LICENSE-2.0
-                                                   *
-                                                   * Unless required by applicable law or agreed to in writing, software
-                                                   * distributed under the License is distributed on an 'AS IS' BASIS,
-                                                   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-                                                   * See the License for the specific language governing permissions and
-                                                   * limitations under the License.
-                                                   */
+try {
+	var canvasOne = document.getElementById('arapp');
+	new _App2.default({
+		canvas: canvasOne,
+		width: canvasOne.width,
+		height: canvasOne.height,
+		path: '../public/models/',
+		modelName: 'Astronaut.drc',
+		materialName: 'Astronaut.mtl'
+	});
+} catch (error) {
+	console.error("Can't find element!");
+} /*
+   * Copyright 2017 Google Inc. All Rights Reserved.
+   * Licensed under the Apache License, Version 2.0 (the 'License');
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *     http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an 'AS IS' BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   */
 
 //import './lib/webar-desktop.min';
 
-new _App2.default({
-  canvas: canvasOne,
-  width: canvasOne.width,
-  height: canvasOne.height,
-  path: '../public/models/',
-  modelName: 'Astronaut.drc',
-  materialName: 'Astronaut.mtl'
-});
+try {
+	var canvasTwo = document.getElementById('arapp2');
+	new _App2.default({
+		canvas: canvasTwo,
+		width: canvasTwo.width,
+		height: canvasTwo.height,
+		path: '../public/models/',
+		modelName: 'Bunny.drc',
+		materialName: 'Bunny.mtl'
+	});
+} catch (error) {
+	console.error("Can't find element!");
+}
 
-var canvasTwo = document.getElementById('arapp2');
-new _App2.default({
-  canvas: canvasTwo,
-  width: canvasTwo.width,
-  height: canvasTwo.height,
-  path: '../public/models/',
-  modelName: 'Bunny.drc',
-  materialName: 'Bunny.mtl'
-});
+//20x8HousingUnit1:
+try {
+	var canvasTwo = document.getElementById('20x8HousingUnit1');
+	new _App2.default({
+		canvas: canvasTwo,
+		width: canvasTwo.width,
+		height: canvasTwo.height,
+		//path : '../public/models/',  
+		//modelNames : ['Astronaut.drc', 'Bunny.drc'],	
+		//materialNames : ['Astronaut.mtl', 'Bunny.mtl'], 
+		//path : '../public/models/Test3/',  
+		//modelNames : ['1.drc', '2.drc','3.drc'],
+		//materialNames : ['1.mtl', '2.mtl', '3.mtl'],
+		path: '../public/models/Draco20x8HousingUnit1_export181201/',
+		count: 9
+	});
+} catch (error) {
+	console.error("Can't find element!");
+}
+
+//30x10AccommodationUnit2:
+try {
+	var canvasTwo = document.getElementById('30x10AccommodationUnit2');
+	new _App2.default({
+		canvas: canvasTwo,
+		width: canvasTwo.width,
+		height: canvasTwo.height,
+		path: '../public/models/Draco30x10AccommodationUnit2_export190102/',
+		count: 7
+	});
+} catch (error) {
+	console.error("Can't find element!");
+}
+
+//40x123BedroomHouse1:
+try {
+	var canvasTwo = document.getElementById('40x123BedroomHouse1');
+	new _App2.default({
+		canvas: canvasTwo,
+		width: canvasTwo.width,
+		height: canvasTwo.height,
+		path: '../public/models/Draco40x123BedroomHouse1_export190102/',
+		count: 5
+	});
+} catch (error) {
+	console.error("Can't find element!");
+}
+
+//BeachHousePrefab:
+try {
+	var canvasTwo = document.getElementById('BeachHousePrefab');
+	new _App2.default({
+		canvas: canvasTwo,
+		width: canvasTwo.width,
+		height: canvasTwo.height,
+		path: '../public/models/DracoBeachHousePrefab/',
+		count: 4
+	});
+} catch (error) {
+	console.error("Can't find element!");
+}
 
 /***/ }),
 /* 5 */
@@ -1610,16 +1679,16 @@ var _initialiseProps = function _initialiseProps() {
     _this2.S3DControls.rotateSpeed = speed;
     _this2.S3DControls.minPolarAngle = Math.PI / 5.0; // radians
     _this2.S3DControls.maxPolarAngle = 1.75 * (Math.PI / 3.0); // radians
-    _this2.S3DControls.minAzimuthAngle = -Math.PI; // radians
-    _this2.S3DControls.maxAzimuthAngle = Math.PI; // radians
-    _this2.S3DControls.minDistance = 1.0;
-    _this2.S3DControls.maxDistance = 4;
+    //this.S3DControls.minAzimuthAngle = -Math.PI; // radians
+    //this.S3DControls.maxAzimuthAngle = Math.PI; // radians
+    _this2.S3DControls.minDistance = 0.2;
+    _this2.S3DControls.maxDistance = 15;
     _this2.S3DControls.enablePan = false;
     _this2.resetS3DCamera();
   };
 
   this.resetS3DCamera = function () {
-    _this2.S3DCamera.position.set(0, 2.304552414782168, 2.382298471034347);
+    _this2.S3DCamera.position.set(0.8, 2, 7);
     _this2.S3DControls.target.set(0.0, 1.0, 0.0);
     _this2.S3DCamera.updateMatrixWorld(true);
   };
@@ -1785,38 +1854,48 @@ var _initialiseProps = function _initialiseProps() {
     var dracoLoader = new _DRACOLoader2.default('../third_party/draco/', { type: 'js' });
 
     mtlLoader.setPath(props.path);
-    mtlLoader.load(props.materialName, function (materials) {
-      materials.preload();
 
-      dracoLoader.load(props.path + props.modelName, function (geometry) {
-        geometry.computeVertexNormals();
-        _this2.setupModel(new THREE.Mesh(geometry, materials.materials.my_mat));
-        _this2.setupModelShadow();
-        _this2.setupLights();
-        _this2.setupReticle();
-        _this2.setupModelTween();
-        _this2.parseURL();
-        _this2.HUD.hideLoadingIndicator();
+    _this2.modelScene = new THREE.Object3D();
+    var set = false;
+
+    var _loop = function _loop(i) {
+
+      mtlLoader.load(i + ".mtl", function (materials) {
+        materials.preload();
+        dracoLoader.load(props.path + i + ".drc", function (geometry) {
+          geometry.computeVertexNormals();
+          _this2.setupModel(new THREE.Mesh(geometry, materials.materials.my_mat));
+          if (set == false) {
+            _this2.setupModelShadow();
+            _this2.setupLights();
+            _this2.setupReticle();
+            _this2.setupModelTween();
+            _this2.parseURL();
+            _this2.HUD.hideLoadingIndicator();
+            set = true;
+          }
+        });
       });
-    });
+    };
+
+    for (var i = 1; i <= props.count; i++) {
+      _loop(i);
+    }
   };
 
   this.setupModel = function (mesh) {
     _this2.model = new THREE.Object3D();
-    _this2.modelScene = new THREE.Object3D();
-
     _this2.modelBoundingBox = new THREE.Box3();
     _this2.modelBoundingBox.setFromObject(mesh);
     var objectSize = _this2.modelBoundingBox.getSize();
-
     var desiredHeight = 1.93;
     var scale = desiredHeight / objectSize.y;
     _this2.model.renderOrder = RENDERORDER.MODEL;
     _this2.model.add(mesh);
-
-    var mtx = new THREE.Matrix4().makeScale(scale, scale, scale);
+    var mtx = new THREE.Matrix4().makeScale(0.01, 0.01, 0.01);
     mesh.castShadow = true;
     mesh.geometry.applyMatrix(mtx);
+    //this.model.rotateY(280);
     _this2.modelBoundingBox.setFromObject(mesh);
 
     _this2.modelScene.add(_this2.model);
@@ -1919,6 +1998,7 @@ var _initialiseProps = function _initialiseProps() {
     });
     _this2.background.renderOrder = RENDERORDER.BACKGROUND;
     _this2.background.fadeOut(0);
+    _this2.background.scale.set(4, 4, 4);
     _this2.S3DScene.add(_this2.background);
   };
 
