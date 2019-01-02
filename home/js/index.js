@@ -1348,7 +1348,7 @@ try {
 		canvas: canvasOne,
 		width: canvasOne.width,
 		height: canvasOne.height,
-		path: '../public/models/',
+		path: '../home/models/',
 		modelName: 'Astronaut.drc',
 		materialName: 'Astronaut.mtl'
 	});
@@ -1377,7 +1377,7 @@ try {
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		path: '../public/models/',
+		path: '../home/models/',
 		modelName: 'Bunny.drc',
 		materialName: 'Bunny.mtl'
 	});
@@ -1398,7 +1398,7 @@ try {
 		//path : '../public/models/Test3/',  
 		//modelNames : ['1.drc', '2.drc','3.drc'],
 		//materialNames : ['1.mtl', '2.mtl', '3.mtl'],
-		path: '../public/models/Draco20x8HousingUnit1_export181201/',
+		path: '../home/models/Draco20x8HousingUnit1_export181201/',
 		count: 9
 	});
 } catch (error) {
@@ -1412,7 +1412,7 @@ try {
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		path: '../public/models/Draco30x10AccommodationUnit2_export190102/',
+		path: '../home/models/Draco30x10AccommodationUnit2_export190102/',
 		count: 7
 	});
 } catch (error) {
@@ -1426,7 +1426,7 @@ try {
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		path: '../public/models/Draco40x123BedroomHouse1_export190102/',
+		path: '../home/models/Draco40x123BedroomHouse1_export190102/',
 		count: 5
 	});
 } catch (error) {
@@ -1440,7 +1440,7 @@ try {
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		path: '../public/models/DracoBeachHousePrefab/',
+		path: '../home/models/DracoBeachHousePrefab/',
 		count: 4
 	});
 } catch (error) {
