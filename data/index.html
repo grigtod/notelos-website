@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<!--
+	Stellar by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html>
+	<head>
+		<title>NOTELOS</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script old version....-->
+		<!--script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script old version... -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+		<script src="/data/datamaps.world.hires.min.js"></script>
+		<link rel="stylesheet" href="/data/d3slider/d3.slider.css" />
+		<script src="/data/d3slider/d3.slider.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main  -->
+					<div id="main">
+
+						<!-- Introduction -->
+							<section id="intro" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h3>Parlament gender distribution around the world (1997-2019)</h3>
+										</header>
+
+										<div id="container">
+										  <div id="left" style = "float:left;width:70%;">
+
+											  <h5><span id="sliderValue"><b>1997</b></span></h5>
+											   <div id="basic_choropleth" style="align:left; position: relative;"> 	</div>  <!--make it responsive etc: https://github.com/markmarkoh/datamaps-->
+											   <div id="yearSlider"  style="align:left; position: relative;"></div>
+
+										  </div>
+										  <div id="right" style = "float:right;width:30%;">
+
+											  <h5><span id="popCountryName"><b></b></span></h5>
+											  <canvas id="myChart" style="visibility: hidden;"></canvas>
+
+										  </div>
+										</div>
+
+								</div>
+							</section>
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<h2>About</h2>
+							<p>A tiny project I did to learn D3.js and web dataviz.</p>
+						</section>
+						<section>
+							<h2>Contacts</h2>
+							<dl class="alt">
+								<dt>Portfolio:</dt>
+								<dd><a href="https://www.grigtod.com" target="_blank">grigtod.com</a></dd>
+								<dt>LinkedIn:</dt>
+								<dd><a href="https://www.linkedin.com/in/grigtod/" target="_blank">in/grigtod</a></dd>
+								<dt>Email</dt>
+								<dd>grigtod@gmail.com</dd>
+							</dl>
+						</section>
+					</footer>
+
+			</div>
+
+
+
+			<script>
+	            //DATA PARSE:
+	            function getJSON(url) {
+	                var resp ;
+	                var xmlHttp ;
+	                resp  = '' ;
+	                xmlHttp = new XMLHttpRequest();
+	                if(xmlHttp != null)
+	                {
+	                    xmlHttp.open( "GET", url, false );
+	                    xmlHttp.send( null );
+	                    resp = xmlHttp.responseText;
+	                }
+	                return resp ;
+	            }
+	            var gapminderDataOriginal = JSON.parse(getJSON('./sg_gen_parl_zs.json') );
+	            var gapminderData = gapminderDataOriginal;
+	            var countryCodes = JSON.parse(getJSON('./codes.json'));
+	            let currentlySelectedYear = 1997;
+
+	            for (q = 0; q < gapminderData.length; q++)
+	            {
+	                 gapminderData[q]['countryShort'] = GetCountryCode(gapminderData[q]['country']);
+	            }
+
+	            function GetDataForCountry(countryName)
+	            {
+	                for (r = 0; r < gapminderDataOriginal.length; r++)
+	                {
+	                    //console.log(gapminderDataOriginal[r]['country']);
+	                    if(countryName == gapminderDataOriginal[r]['country'] && gapminderDataOriginal[r][currentlySelectedYear] != "")
+	                    {
+	                        return  ( " - " + gapminderDataOriginal[r][currentlySelectedYear] + "% female.");
+	                    }
+	                }
+	                return "";
+	            }
+
+	            //MAP:
+	            var basic_choropleth = new Datamap(
+	            {
+	                element: document.getElementById("basic_choropleth"),
+	                //responsive: true,
+					//aspectRatio: 0.6,
+	                projection: 'mercator',
+					//"width":    Math.max(document.documentElement.clientWidth, window.innerWidth || 0)/2,
+					"height":    Math.max(document.documentElement.clientWidth, window.innerWidth || 0)/4,
+					//"height":    600,
+	                geographyConfig:
+	                {
+	                    borderWidth: 0.5,
+	                    borderOpacity: 1,
+	                    borderColor: '#444444',
+	                    popupTemplate: function(geography, data)
+	                    {
+							UpdateChart(geography.properties.iso );
+	                        return '<div class="hoverinfo"> <b>' + geography.properties.name + GetDataForCountry(geography.properties.name);
+	                    },
+	                    popupOnHover: true,
+	                    highlightOnHover: false,
+	                    highlightBorderColor: '#bada55',
+	                    highlightFillColor: '#FC8D59',
+	                    highlightFillOpacity: 1,
+	                    highlightBorderWidth: 1
+	                },
+
+	                fills: {
+	                    defaultFill: "#9EA0A3",
+	                    hasData: "#fa0fa0",
+	                    lacksData:"#9EA0A3",
+	                }
+	            });
+
+
+
+
+	        const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+	          const hex = x.toString(16)
+	          return hex.length === 1 ? '0' + hex : hex
+	        }).join('')
+
+	        function HSVtoRGB(h, s, v) {
+	            var r, g, b, i, f, p, q, t;
+	            if (arguments.length === 1) {
+	                s = h.s, v = h.v, h = h.h;
+	            }
+	            i = Math.floor(h * 6);
+	            f = h * 6 - i;
+	            p = v * (1 - s);
+	            q = v * (1 - f * s);
+	            t = v * (1 - (1 - f) * s);
+	            switch (i % 6) {
+	                case 0: r = v, g = t, b = p; break;
+	                case 1: r = q, g = v, b = p; break;
+	                case 2: r = p, g = v, b = t; break;
+	                case 3: r = p, g = q, b = v; break;
+	                case 4: r = t, g = p, b = v; break;
+	                case 5: r = v, g = p, b = q; break;
+	            }
+	            return {
+	                r: Math.round(r * 255),
+	                g: Math.round(g * 255),
+	                b: Math.round(b * 255)
+	            };
+	        }
+
+
+
+
+	        function UpdateMap(year)
+	        {
+	            currentlySelectedYear = year;
+	            for (i = 0; i < gapminderData.length; i++)
+	            {
+	                var filedData = gapminderData[i][year];
+	                if(filedData > 50) filedData = 50;
+	                var rgbData = HSVtoRGB(filedData/120, 1, 1);
+	                var hexData = rgbToHex(rgbData.r, rgbData.g, rgbData.b); //rgbToHex(Math.floor(2.56 * filedData), 51, 255);
+
+	                var country = gapminderData[i]['countryShort'];
+
+	                if(country != "")
+	                {
+	                    if(filedData != "" ) {
+	                        basic_choropleth.updateChoropleth(
+	                        {
+	                            [country]: hexData,
+	                        });
+	                    }
+	                    else {
+	                        basic_choropleth.updateChoropleth(
+	                        {
+	                            [country]: { fillKey: 'lacksData' },
+	                        });
+	                    }
+	                }
+	            }
+	        }
+
+	        function GetCountryCode(name)
+	        {
+	            for (z = 0; z < countryCodes.length; z++)
+	            {
+	                if(countryCodes[z]['name'] == name)
+	                    return countryCodes[z]['alpha-3'];
+	            }
+	            return "";
+	        }
+
+	        window.addEventListener('resize', function(event){
+	          basic_choropleth.resize();
+	        });
+
+	        //SLIDER:
+	        d3.select('#yearSlider').call(d3.slider().axis(true).min(1997).max(2019).step(1).on("slide",function(evt, value) {
+	            UpdateMap(value);
+	            d3.select('#sliderValue').text(value);
+	        }));
+
+			//CHART
+			var chartElementRef = document.getElementById('myChart');
+			var ctx = document.getElementById('myChart').getContext('2d');
+			var myChart = new Chart(ctx, {
+			    type: 'line',
+			    data: {
+			        labels: ['1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+			        datasets: [{
+			            label: '% of females in parlament',
+			            data: [12, 19, 3, 5, 2, 3],
+			            backgroundColor: [
+			                'rgba(255, 99, 132, 0.5)'
+			            ],
+			            borderColor: [
+			                'rgba(255, 0, 0, 1)'
+			            ],
+			            borderWidth: 1
+			        }]
+			    },
+			    options: {
+			        scales: {
+			            yAxes: [{
+			                ticks: {
+			                    beginAtZero: true
+			                }
+			            }]
+			        }
+			    }
+			});
+
+
+			function removeData(chart) {
+			   // chart.data.labels.pop();
+
+			   for(asf = 1998; asf < 2019; asf++)
+			   {
+				   chart.data.datasets.forEach((dataset) => {
+					   dataset.data.pop();chart.update();
+				   });
+			   }
+
+			}
+
+			function addData(chart, data) {
+			    //chart.data.labels.push(label);
+			    chart.data.datasets.forEach((dataset) => {
+			        dataset.data.push(data);
+			    });
+			    chart.update();
+			}
+
+			var currentCountryCode;
+
+			function UpdateChart(countryCode)
+			{
+				chartElementRef.style.visibility = "visible";
+				if(currentCountryCode != countryCode)
+				{
+					d3.select('#popCountryName').text(countryCode);
+					currentCountryCode = countryCode;
+				    removeData(myChart);
+
+				   for (c = 0; c < gapminderData.length; c++)
+				   {
+					   if(countryCode == gapminderData[c]['countryShort'])
+					   {
+						   var lastVal = "";
+						   for(tyi = 1998; tyi <= 2019; tyi++)
+						   {
+							   var currentVal = gapminderData[c][tyi];
+							   if(currentVal == "")currentVal = lastVal;
+							   addData(myChart, currentVal);
+							   lastVal =currentVal;
+						   }
+					   }
+				   }
+				}
+			}
+
+			//UPDATE
+	        UpdateMap(1997);
+	     </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/skel.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
