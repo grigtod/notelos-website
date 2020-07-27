@@ -1,86 +1,107 @@
-<!DOCTYPE HTML>
-<!--
-	Stellar by Pixelarity
-	pixelarity.com | hello@pixelarity.com
-	License: pixelarity.com/license
--->
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>NOTELOS</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-	</head>
-	<body>
+<title>Notelos Ltd</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/style.css">
+<body>
+    <style>
+        body{
+            background-color: #935d8c;
+            background-image: url("images/background/overlay.png"), -moz-linear-gradient(45deg, # 15%, #AFC9DC 85%);
+            background-image: url("images/background/overlay.png"), -webkit-linear-gradient(45deg, #AFC9DC 15%, #AFC9DC 85%);
+            background-image: url("images/background/overlay.png"), -ms-linear-gradient(45deg, #AFC9DC 15%, #AFC9DC 85%);
+            background-image: url("images/background/overlay.png"), linear-gradient(45deg, #AFC9DC 15%, #AFC9DC 85%);
+        }
+    </style>
+    <div class="w3-content w3-padding" style="max-width:1564px">
+        <div class="center">
+            <img src="images/logo/notelosLogo.png"><br><br>
+            <h1>NOTELOS</h1>
+            <p>A company that specialises in XR R&D!</p>
+        </div>
+      <div class="w3-container w3-padding-32" id="projects"> </div>
+      <div class="w3-row-padding">
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+              <div class="w3-display-topleft w3-black w3-padding">AR R&D</div>
+            <a href = "/ARR&D"><img src="/images/work/thumbnails/ARRandD.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">UberReflections</div>
+            <a href = "/uber-reflections"><img src="/images/work/thumbnails/uber-reflections.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">Foveated Rendering</div>
+            <a href = "/foveated-rendering"><img src="/images/work/thumbnails/foveated-rendering.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">Pterosaur</div>
+            <a href = "/pterosaur"><img src="/images/work/thumbnails/pterosaur.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+      </div>
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+      <div class="w3-row-padding">
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">Zen Builda - Android game</div>
+            <a href = "/zen-build"><img src="/images/work/thumbnails/zen-build.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">Typewriter - Python app</div>
+            <a href = "/typewriter" target="_blank"><img src="/images/work/thumbnails/typewriter.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">AR Container Houses Web App</div>
+            <a href = "/home" target="_blank"><img src="/images/work/thumbnails/home.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">AR Plants app</div>
+            <a href = "/plant"><img src="/images/work/thumbnails/plant.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
+      </div>
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<span class="logo"><img src="images/notelosLogo.png" alt="" /></span>
-						<h1>NOTELOS</h1>
-						<p>An R&D driven company that does things differently!</p> 
-					</header>
-				<!-- Main  -->
-					<div id="main">
+      <div class="w3-row-padding">
 
-						<!-- Introduction -->
-							<section id="intro" class="main">
-								<div class="spotlight">
-									<div class="content">
-										<header class="major">
-											<h2>Solidus AR</h2>
-										</header>
-										
-									 <div class="container">
-										<div class="video-container"><iframe width="500" height="281" src="https://www.youtube.com/embed/djhRES-szL0" style="border:none;" allowfullscreen></iframe></div>
-										<br>
-										<p>This project aims to push the boundaries of what's possible in AR. To make augmented reality truly immersive it needs to feel connected to the real world, but looking into existing AR applications the virtual objects seem very disconnected. That’s why I came up with this framework!
-										</p>
-										<p>At first GPS data is used to figure if the user is inside or outside. Weather effects and sun shadows are not applied to the object if it’s inside a building. 
-										</p>
-										<p>Then the user location, weather data (API call with location) and time of day is used to simulate a virtual sun and create realistic lightning and shadows for the object. Weather data is also used for simulating clouds(no sun shadows), rain, snow and even wind force and direction. 
-										</p>
-										<p>Another separate system takes care of the reflections. In this framework there are two types of reflections. The first time is the reflections from the object. Video feed is used to approximate these. The second type is the ground reflection. Currently ground reflections happen only when water is detected below the object. The rain data is used to enable ground reflections, but to make sure the floor is wet a machine learning service is used to determine if there’s water. 
-										</p>
-										The machine learning system returns data regarding the floor below the virtual object and in the example here I use it to change the sound of the floor depending of it’s material. </p>
-										</p>
-									</div>
-								</div>
-							</section>  
-					</div>
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <div class="w3-display-container">
+          <div class="w3-display-topleft w3-black w3-padding">Parliament gender distribution web app</div>
+          <a href = "/parliament"><img src="/images/work/thumbnails/parliament.jpg" style="width:100%" class = "portfolio-image"></a>
+        </div>
+      </div>
+      <div class="w3-col l3 m6 w3-margin-bottom">
+        <div class="w3-display-container">
+          <div class="w3-display-topleft w3-black w3-padding">XR app to explore MRI data</div>
+          <a href = "/MRIXR"><img src="/images/work/thumbnails/mrixr.jpg" style="width:100%" class = "portfolio-image"></a>
+        </div>
+      </div>
+        <div class="w3-col l3 m6 w3-margin-bottom">
+          <div class="w3-display-container">
+            <div class="w3-display-topleft w3-black w3-padding">Smaller projects</div>
+            <a href = "/old"><img src="/images/work/thumbnails/old.jpg" style="width:100%" class = "portfolio-image"></a>
+          </div>
+        </div>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<h2>About</h2>
-							<p>Currently Notelos is just <a href="https://www.grigtod.com" target="_blank">me</a>, but I'm trying to create a company that pushes the boundaries of what's possible with XR tech!</p>
-						</section>
-						<section>
-							<h2>Contacts</h2>
-							<dl class="alt">
-								<dt>LinkedIn:</dt>
-								<dd><a href="https://www.linkedin.com/in/grigtod/" target="_blank">in/grigtod</a></dd>
-								<dt>Email</dt>
-								<dd>grigtod@gmail.com</dd>
-							</dl>
-						</section>
-					</footer>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
-	</body>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div id="footer"></div>
+</body>
+<script type="text/javascript" src="code/jquery.min.js"></script>
+<script type="text/javascript" src="code/reuseElements.js"></script>
 </html>
