@@ -1387,7 +1387,6 @@ try {
 
 //20x8HousingUnit1:
 try {
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	var canvasTwo = document.getElementById('20x8HousingUnit1');
 	new _App2.default({
 
