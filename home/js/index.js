@@ -1387,18 +1387,20 @@ try {
 
 //20x8HousingUnit1:
 try {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	var canvasTwo = document.getElementById('20x8HousingUnit1');
 	new _App2.default({
+
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		//path : '../public/models/',  
-		//modelNames : ['Astronaut.drc', 'Bunny.drc'],	
-		//materialNames : ['Astronaut.mtl', 'Bunny.mtl'], 
-		//path : '../public/models/Test3/',  
+		//path : '../public/models/',
+		//modelNames : ['Astronaut.drc', 'Bunny.drc'],
+		//materialNames : ['Astronaut.mtl', 'Bunny.mtl'],
+		//path : '../public/models/Test3/',
 		//modelNames : ['1.drc', '2.drc','3.drc'],
 		//materialNames : ['1.mtl', '2.mtl', '3.mtl'],
-		path: '../models/Draco20x8HousingUnit1_export181201/',
+		path: '../home/models/Draco20x8HousingUnit1_export181201/',
 		count: 9
 	});
 } catch (error) {
@@ -1412,7 +1414,7 @@ try {
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		path: '../models/Draco30x10AccommodationUnit2_export190102/',
+		path: '../home/models/Draco30x10AccommodationUnit2_export190102/',
 		count: 7
 	});
 } catch (error) {
@@ -1426,7 +1428,7 @@ try {
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		path: '../models/Draco40x123BedroomHouse1_export190102/',
+		path: '../home/models/Draco40x123BedroomHouse1_export190102/',
 		count: 5
 	});
 } catch (error) {
@@ -1440,7 +1442,7 @@ try {
 		canvas: canvasTwo,
 		width: canvasTwo.width,
 		height: canvasTwo.height,
-		path: '../models/DracoBeachHousePrefab/',
+		path: '../home/models/DracoBeachHousePrefab/',
 		count: 4
 	});
 } catch (error) {
@@ -1851,7 +1853,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.loadMaterialAndModel = function (props) {
     var mtlLoader = new THREE.MTLLoader();
-    var dracoLoader = new _DRACOLoader2.default('../third_party/draco/', { type: 'js' });
+    var dracoLoader = new _DRACOLoader2.default('../home/third_party/draco/', { type: 'js' });
 
     mtlLoader.setPath(props.path);
 
