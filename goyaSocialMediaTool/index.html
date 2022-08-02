@@ -51,7 +51,7 @@
 											window.addEventListener('load',() => {
 												let savedUsername = getCookie("username"); 
 											
-												if(savedUsername != "" || savedUsername != "undefined") {
+												if(savedUsername != "" && savedUsername != "undefined") {
 													console.log("Username cookie loaded: " + savedUsername);
 													document.getElementById("uname").value = savedUsername; 
 													toggleUsernameDependantFeatures(true);
