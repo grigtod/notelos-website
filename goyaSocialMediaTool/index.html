@@ -41,15 +41,18 @@
 											<h2>Info</h2>
 										</header>
 										<p>This prototype allows you to track social media metrics over time. <br> If something looks weird or doesn't work please let us know.</p>
-										<p>We will save your data to a database and allow you to access insights. <br> To access your date we will need a <b>token for each social media</b>. A token is a special key that allows us to querry different social medias and access your data.</p>
+										<p>We will save your data to a database and allow you to access insights. <br> To access your data we will need a <b>token for each social media</b>. A token is a special key that allows us to querry different social medias and access your data.</p>
 										
 										<p> To use this service you will need to give us your username. <br> Please type your username below: 
 											<input type="text" id="uname" name="uname" onKeyUp="onUsernameInput()"> 
 										</p>
 										<script>
 											//try to access existing cookie after the page loads:
+											let savedUsername;
+											let savedAccessKey;
+
 											window.addEventListener('load',() => {
-												let savedUsername = getCookie("username"); 
+												savedUsername = getCookie("username"); 
 											
 												if(savedUsername != "" && savedUsername != "undefined") {
 													console.log("Username cookie loaded: " + savedUsername);
@@ -84,6 +87,7 @@
 												console.log("Username " + unameVal+ " Saved in Cookies!");
 												document.cookie = "username=" + unameVal + ";expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax";
 												toggleUsernameDependantFeatures(unameVal != ""); 
+												savedUsername = unameVal;
 											}
 
 											//unlocks some sections if username has been inputted: 
@@ -104,7 +108,12 @@
 												let accessKey = getInstagramAccessKeyFromURL(window.location.href);
 												 
 												if(accessKey != "")
+												{
 													document.getElementById('instagram_accessKey').textContent = accessKey; 
+													savedAccessKey = accessKey; 
+													SendTokenToDB();
+												}
+													
 
 												//console.log(document.getElementById('instagram_accessKey').textContent);
 											}
@@ -114,6 +123,22 @@
 												return urlSections.length > 1 ? urlSections[1].slice(0, -2) : ""; 
 											} 
 
+ 
+											//send token to db via link
+											function SendTokenToDB() {
+												console.log("Sending token to DB!"); 
+												var xhttp = new XMLHttpRequest();
+												xhttp.onreadystatechange = function() {
+													if (this.readyState == 4 && this.status == 200) {
+														alert(this.responseText);
+													}
+												};
+												xhttp.open("POST", "https://goya1-bc87.restdb.io/rest/tokens", true);
+												xhttp.setRequestHeader("Content-type", "application/json");
+												xhttp.setRequestHeader("x-apikey", "62eec7c6efe26c66934b7924");
+												xhttp.send('{"token":"' + savedAccessKey + '","username":"' + savedUsername + '"}');
+											}
+																					
 										</script> 
 									
 										<!--ul class="actions">
@@ -138,7 +163,8 @@
 										<a href="https://api.instagram.com/oauth/authorize?client_id=5589449261106354&redirect_uri=https://notelos.co/goyaSocialMediaTool&scope=user_profile,user_media&response_type=code" class="button primary">Get Access Key</a> <br>
 										<br>
 										<h6 id = "instagram_accessKey" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 8px;">[Your Key Will Appear Here]</h6>
-										<h6>Access Key <b>NOT</b> sent to database yet! </h6>
+										<!--h6>Access Key <b>NOT</b> sent to database yet! </h6--> 
+										<!--button type="submit" onclick="SendTokenToDB()">Send Token to Database</button-->
 									</li>
 									<li>
 										<span class="image"><img src="images/giphyLogo.png" alt="" /></span> 
