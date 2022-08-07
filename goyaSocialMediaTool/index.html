@@ -363,8 +363,9 @@
 					xhttp.setRequestHeader("x-apikey", databaseK); 
 					xhttp.send('{"access_key":"' + savedAccessKey + '","username":"' + savedUsername + '","type":"instagram_basicAPI"}');
 
-					await sleep(2000); 
-					window.location.href = 'https://notelos.co/goyaSocialMediaTool/'; 
+					setTimeout(function(){
+						window.location.href = 'https://notelos.co/goyaSocialMediaTool/'; 
+					}, 2000);  
 				}
 
 				function SendInstaGraphAPIKeyToDB()
