@@ -21,14 +21,13 @@
 					</header>
 
 				<!-- Nav -->
-					<nav id="nav">
+					<!--nav id="nav">
 						<ul>
 							<li><a href="#intro" class="active">Info</a></li>
 							<li><a href="#first">Connect</a></li>
-							<li><a href="#second">Insights</a></li>
-							<!--li><a href="#cta">Get Started</a></li-->
+							<li><a href="#second">Insights</a></li> 
 						</ul>
-					</nav>
+					</nav-->
 
 				<!-- Main -->
 					<div id="main">
@@ -40,107 +39,17 @@
 										<header class="major">
 											<h2>Info</h2>
 										</header>
-										<p>This prototype allows you to track social media metrics over time. <br> If something looks weird or doesn't work please let us know.</p>
-										<p>We will save your data to a database and allow you to access insights. <br> To access your data we will need a <b>token for each social media</b>. A token is a special key that allows us to querry different social medias and access your data.</p>
+										<p>This prototype allows you to track social media metrics over time.</p>
+										<p>We will save your data to a database and allow you to access insights. <br> To keep track of your data we will need an <b>access key</b> for each social media.</p>
 										
-										<p> To use this service you will need to give us your username. <br> Please type your username below: 
-											<input type="text" id="uname" name="uname" onKeyUp="onUsernameInput()"> 
+										<p> To use this service you will need to give us your username.
+											<div style = "display:flex;">
+												<h4 id="uname_label" style ="display:none;"></h4>
+												<input type="text" id="uname" name="uname" style="width: 40%;" onKeyUp="onUsernameInput()"> 
+												<a id="uname_applyButton" style ="display:none;" onclick="GetTokenDataFromDB()" class="button primary">Apply</a> <br>
+											</div> 
 										</p>
-										<script>
-											//try to access existing cookie after the page loads:
-											let savedUsername;
-											let savedAccessKey;
-
-											window.addEventListener('load',() => {
-												savedUsername = getCookie("username"); 
-											
-												if(savedUsername != "" && savedUsername != "undefined") {
-													console.log("Username cookie loaded: " + savedUsername);
-													document.getElementById("uname").value = savedUsername; 
-													toggleUsernameDependantFeatures(true);
-												}
-												else {
-													toggleUsernameDependantFeatures(false);
-												}
-
-												tryGetInstagramAccessKey();
-											});
-											 
-											function getCookie(c_name) {
-												var i,x,y,ARRcookies=document.cookie.split(";");
-
-												for (i=0;i<ARRcookies.length;i++)
-												{
-													x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-													y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-													x=x.replace(/^\s+|\s+$/g,"");
-													if (x==c_name)
-													{
-														return unescape(y);
-													}
-												}
-											} 
-											//save cookie when user inputs username
-											function onUsernameInput()
-											{
-												let unameVal = document.getElementById("uname").value;
-												console.log("Username " + unameVal+ " Saved in Cookies!");
-												document.cookie = "username=" + unameVal + ";expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax";
-												toggleUsernameDependantFeatures(unameVal != ""); 
-												savedUsername = unameVal;
-											}
-
-											//unlocks some sections if username has been inputted: 
-
-											function toggleUsernameDependantFeatures (_newState) {
-											
-												document.getElementById('warning_ConnectTab').style.display=_newState?'none':'block';
-												document.getElementById('warning_InsightsTab').style.display=_newState?'none':'block';
-												document.getElementById('content_ConnectTab').style.display=_newState?'block':'none';
-												document.getElementById('content_InsightsTab').style.display=_newState?'block':'none'; 
-											}
-
-
-											//instagram access key related:
-  
-											function tryGetInstagramAccessKey()
-											{
-												let accessKey = getInstagramAccessKeyFromURL(window.location.href);
-												 
-												if(accessKey != "")
-												{
-													document.getElementById('instagram_accessKey').textContent = accessKey; 
-													savedAccessKey = accessKey; 
-													SendTokenToDB();
-												}
-													
-
-												//console.log(document.getElementById('instagram_accessKey').textContent);
-											}
-
-											function getInstagramAccessKeyFromURL(url) {
-												var urlSections=url.split("?code="); 
-												return urlSections.length > 1 ? urlSections[1].slice(0, -2) : ""; 
-											} 
-
- 
-											//send token to db via link
-											function SendTokenToDB() {
-												console.log("Sending token to DB!"); 
-												var xhttp = new XMLHttpRequest();
-												xhttp.onreadystatechange = function() {
-													if (this.readyState == 4 && this.status == 200) {
-														alert(this.responseText);
-													}
-												};
-												xhttp.open("POST", "https://goya1-bc87.restdb.io/rest/tokens", true);
-												xhttp.setRequestHeader("Content-type", "application/json");
-												xhttp.setRequestHeader("x-apikey", "62eec7c6efe26c66934b7924");
-												xhttp.send('{"token":"' + savedAccessKey + '","username":"' + savedUsername + '"}');
-											}
-																					
-										</script> 
-									
+										 
 										<!--ul class="actions">
 											<li><a href="generic.html" class="button">Learn More</a></li>
 										</ul-->
@@ -153,16 +62,42 @@
 							<section id="first" class="main special">
 								<header class="major">
 									<h2>Connect</h2>
-									<h3 id = "warning_ConnectTab">PLEASE INPUT YOUR USERNAME IN INFO SECTION TO ACCESS THIS FEATURE</h3>
+									<h3 id = "warning_ConnectTab">PLEASE COMPLETE INFO SECTION TO SEE THIS</h3>
 								</header>
 								<div id = "content_ConnectTab"> 
 								<ul class="features"> 
 									<li style="overflow: hidden;text-overflow: '...';">
 										<span class="image"><img src="images/instagramLogo.png" alt="" /></span> 
-										<h3>Instagram</h3> 
-										<a href="https://api.instagram.com/oauth/authorize?client_id=5589449261106354&redirect_uri=https://notelos.co/goyaSocialMediaTool&scope=user_profile,user_media&response_type=code" class="button primary">Get Access Key</a> <br>
-										<br>
-										<h6 id = "instagram_accessKey" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 8px;">[Your Key Will Appear Here]</h6>
+										
+										<h3>Instagram - Basic API</h3> 
+										<div style="line-height:30px;">
+											Current key:
+											<h6 id = "instagram_basicAPIAccessKey" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 12px;">[None]</h6>
+											<br>
+										</div>
+										<div id="instagram_basicAPISetDiv">
+											Set via Instagram: <br>
+											<a href="https://api.instagram.com/oauth/authorize?client_id=5589449261106354&redirect_uri=https://notelos.co/goyaSocialMediaTool&scope=user_profile,user_media&response_type=code" class="button primary">Set Key</a> <br>
+											<br> 
+										</div>
+										<!--button type="submit" onclick="SendTokenToDB()">Send Token to Database</button-->
+									</li>
+									<li style="overflow: hidden;text-overflow: '...';">
+										<span class="image"><img src="images/instagramLogo.png" alt="" /></span> 
+										<h3>Instagram - Graph API</h3>  
+										<div style="line-height:30px;">
+											Current key:
+											<h6 id = "instagram_graphAPIAccessKey" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 12px;">[None]</h6>
+											<br>
+										</div>
+										<div id="instagram_graphAPISetDiv"> 
+											Set manually: <br> 
+											<div style = "display:flex; height:15%;">
+												<input type="text" id="instagramGraphAPIAccessKeyInput" name="graphAPIAccessKeyInputName">  
+												<a onclick="SendInstaGraphAPIKeyToDB()" class="button primary">Apply</a>  
+											</div>
+										</div>
+
 										<!--h6>Access Key <b>NOT</b> sent to database yet! </h6--> 
 										<!--button type="submit" onclick="SendTokenToDB()">Send Token to Database</button-->
 									</li>
@@ -180,11 +115,11 @@
 							<section id="second" class="main special">
 								<header class="major">
 									<h2>Insights</h2>
-									<h3 id = "warning_InsightsTab">PLEASE INPUT YOUR USERNAME IN INFO SECTION TO ACCESS THIS FEATURE</h3>
+									<h3 id = "warning_InsightsTab">PLEASE COMPLETE INFO SECTION TO SEE THIS</h3>
 								</header>
 								<div id = "content_InsightsTab">
 									<p>Work In Progress</p>
-								<ul class="statistics">
+								<!--ul class="statistics">
 									<li class="style1">
 										<span class="icon solid fa-code-branch"></span>
 										<strong>0</strong> Connections
@@ -205,7 +140,7 @@
 										<span class="icon fa-heart"></span>
 										<strong>0</strong> Likes
 									</li>
-								</ul>
+								</ul-->
 								</div>
 							</section>
 							<br>
@@ -260,6 +195,195 @@
 			</div>
 
 		<!-- Scripts -->
+			<script>
+				//Cookies related only:
+				
+				//try to access existing cookie after the page loads:
+				let devMode = false;
+				let databaseURL = "https://goya1-bc87.restdb.io/";
+				let databaseK = "62eec7c6efe26c66934b7924";
+				let savedUsername;
+				let savedAccessKey;
+
+				window.addEventListener('load',() => {
+					savedUsername = getCookie("username");  
+
+					if(savedUsername === undefined)
+					{
+						document.getElementById("uname").value = ""; 
+						savedUsername = "";
+					}
+					
+					if(savedUsername !== "") {
+						console.log("Username cookie loaded: " + savedUsername);
+						document.getElementById("uname").value = savedUsername;  
+					} 
+					toggleUnameApplyButton();
+					toggleUsernameDependantFeatures(false);
+
+					tryGetInstagramAccessKey();
+
+					if(devMode)
+					{
+						savedUsername = "devMode";
+						GetTokenDataFromDB();
+					}
+				});
+				
+				function getCookie(c_name) {
+					var i,x,y,ARRcookies=document.cookie.split(";");
+
+					for (i=0;i<ARRcookies.length;i++)
+					{
+						x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+						y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+						x=x.replace(/^\s+|\s+$/g,"");
+						if (x==c_name)
+						{
+							return unescape(y);
+						}
+					}
+				}
+				
+				//save cookie when user inputs username
+				function onUsernameInput()
+				{
+					let unameVal = document.getElementById("uname").value;
+					console.log(">>>>>>>>>Username " + unameVal+ " Saved in Cookies!");
+					document.cookie = "username=" + unameVal + ";expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax"; 
+					savedUsername = unameVal;
+					toggleUnameApplyButton(); 
+				}
+
+
+			</script>
+			<script>
+				//useful references
+			 
+				//
+  
+				function GetTokenDataFromDB()
+				{ 
+					//get token data from user
+					GetTokensFromDB();
+					//if the username is not null or undefined...
+					toggleUsernameDependantFeatures(true);
+					document.getElementById('uname_applyButton').style.display = 'none'; 
+					document.getElementById('uname').style.display= 'none';
+					document.getElementById('uname_label').innerHTML = "Your username is: <b>" + savedUsername + "</b>";
+					document.getElementById('uname_label').style.display= 'block';
+				}
+
+				//unlocks some sections if username has been inputted: 
+				function toggleUnameApplyButton()
+				{ 
+					document.getElementById('uname_applyButton').style.display=(savedUsername !== "")?'block':'none';
+					
+					
+				}
+
+				function toggleUsernameDependantFeatures (_newState) {
+				
+					document.getElementById('warning_ConnectTab').style.display=_newState?'none':'block';
+					document.getElementById('warning_InsightsTab').style.display=_newState?'none':'block';
+					document.getElementById('content_ConnectTab').style.display=_newState?'block':'none';
+					document.getElementById('content_InsightsTab').style.display=_newState?'block':'none'; 
+					document.getElementById('second').style.display=_newState?'block':'none'; 
+					document.getElementById('first').style.display=_newState?'block':'none'; 
+				}
+
+
+				//instagram access key related:
+
+				function tryGetInstagramAccessKey()
+				{
+					let accessKey = getInstagramAccessKeyFromURL(window.location.href);
+					
+					if(accessKey != "")
+					{
+						document.getElementById('instagram_basicAPIAccessKey').textContent = accessKey; 
+						document.getElementById('instagram_basicAPISetDiv').style.display= 'none';
+						savedAccessKey = accessKey; 
+						SendInstaBasicAccessKeyToDB();
+
+					} 
+					
+					//console.log(document.getElementById('instagram_accessKey').textContent);
+				}
+
+				function getInstagramAccessKeyFromURL(url) {
+					var urlSections=url.split("?code="); 
+					return urlSections.length > 1 ? urlSections[1].slice(0, -2) : ""; 
+				} 
+				
+				function GetTokensFromDB()
+				{
+					let xhttp = new XMLHttpRequest();
+					xhttp.open("GET", databaseURL + "rest/tokens", false); 
+					xhttp.setRequestHeader("Accept", "application/json");
+					xhttp.setRequestHeader("Content-type", "application/json");
+					xhttp.setRequestHeader("x-apikey", databaseK);
+					xhttp.send(null);
+					//console.log(xhttp.responseText);
+					const json = xhttp.responseText;
+					const obj = JSON.parse(json);
+					for(let i = 0; i < obj.length; i++)
+					{
+						if(obj[i].username == savedUsername) 
+						{ 
+							if(obj[i].type == "instagram_basicAPI")
+							{
+								console.log(obj[i]);
+								document.getElementById('instagram_basicAPIAccessKey').textContent = obj[i].access_key; 
+								document.getElementById('instagram_basicAPISetDiv').style.display= 'none';
+								// 
+							} 
+							if(obj[i].type == "instagram_graphAPI")
+							{
+								document.getElementById('instagram_graphAPIAccessKey').textContent = obj[i].access_key; 
+								document.getElementById('instagram_graphAPISetDiv').style.display= 'none';
+							}
+						} 
+					}
+					
+					//return xmlHttpReq.responseText;
+				}
+
+				//send token to db via link
+				function SendInstaBasicAccessKeyToDB() {
+					console.log("Sending token to DB!"); 
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							alert(this.responseText);
+						}
+					};
+					xhttp.open("POST", databaseURL + "rest/tokens", true);
+					xhttp.setRequestHeader("Content-type", "application/json");
+					xhttp.setRequestHeader("x-apikey", databaseK); 
+					xhttp.send('{"access_key":"' + savedAccessKey + '","username":"' + savedUsername + '","type":"instagram_basicAPI"}');
+				}
+
+				function SendInstaGraphAPIKeyToDB()
+				{  
+					let keyToSend = document.getElementById('instagramGraphAPIAccessKeyInput').value;
+
+					var xhttp = new XMLHttpRequest();
+					xhttp.onreadystatechange = function() {
+						if (this.readyState == 4 && this.status == 200) {
+							alert(this.responseText);
+						}
+					};
+					xhttp.open("POST", databaseURL + "rest/tokens", true);
+					xhttp.setRequestHeader("Content-type", "application/json");
+					xhttp.setRequestHeader("x-apikey", databaseK); 
+					xhttp.send('{"access_key":"' + keyToSend + '","username":"' + savedUsername + '","type":"instagram_graphAPI"}');  
+					document.getElementById('instagram_graphAPIAccessKey').textContent = keyToSend; 
+					document.getElementById('instagram_graphAPISetDiv').style.display= 'none';  
+				}
+														
+			</script> 
+			
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.scrollex.min.js"></script>
 			<script src="assets/js/jquery.scrolly.min.js"></script>
