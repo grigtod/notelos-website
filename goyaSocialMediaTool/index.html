@@ -305,7 +305,7 @@
 						document.getElementById('instagram_basicAPISetDiv').style.display= 'none';
 						savedAccessKey = accessKey; 
 						SendInstaBasicAccessKeyToDB();
-
+						window.location.href = 'https://notelos.co/goyaSocialMediaTool/'; 
 					} 
 					
 					//console.log(document.getElementById('instagram_accessKey').textContent);
@@ -329,8 +329,9 @@
 					const obj = JSON.parse(json);
 					for(let i = 0; i < obj.length; i++)
 					{
-						if(obj[i].username == savedUsername) 
+						if(obj[i].username === savedUsername) 
 						{ 
+							console.log(obj[i].username);
 							if(obj[i].type == "instagram_basicAPI")
 							{
 								console.log(obj[i]);
