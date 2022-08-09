@@ -7,6 +7,49 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+
+	
+		<style>
+			/* This css is for the tabs in Insights */ 
+			/* Style the tab */
+			.tab {
+			  overflow: hidden;
+			  border: 1px solid #ccc;
+			  background-color: #f1f1f1;
+			}
+			
+			/* Style the buttons inside the tab */
+			.tab button {
+			  background-color: inherit;
+			  /*float: left; this pushes them to the left side*/
+			  border: none;
+			  outline: none;
+			  cursor: pointer;
+			  padding: 0px 0px;
+			  transition: 0.3s;
+			  font-size: 17px;
+			}
+			
+			/* Change background color of buttons on hover */
+			.tab button:hover {
+			  background-color: #ddd;
+			}
+			
+			/* Create an active/current tablink class */
+			.tab button.active {
+			  background-color: #ccc;
+			}
+			
+			/* Style the tab content */
+			.tabcontent {
+			  display: none;
+			  padding: 6px 12px;
+			  border: 1px solid #ccc;
+			  border-top: none;
+			}
+			</style>
+
+
 	</head>
 	<body class="is-preload">
 
@@ -71,7 +114,7 @@
 										
 										<h3>Instagram - Basic API</h3> 
 										<div style="line-height:30px;">
-											Current key:
+											<h6 id = "instagram_basicAPIKeyLabel">Current key:</h6>
 											<h6 id = "instagram_basicAPIAccessKey" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 12px;">[None]</h6>
 											<br>
 										</div>
@@ -86,7 +129,7 @@
 										<span class="image"><img src="images/instagramLogo.png" alt="" /></span> 
 										<h3>Instagram - Graph API</h3>  
 										<div style="line-height:30px;">
-											Current key:
+											<h6 id = "instagram_graphAPIKeyLabel">Current key:</h6>
 											<h6 id = "instagram_graphAPIAccessKey" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 12px;">[None]</h6>
 											<br>
 										</div>
@@ -116,9 +159,53 @@
 								<header class="major">
 									<h2>Insights</h2>
 									<h3 id = "warning_InsightsTab">PLEASE COMPLETE INFO SECTION TO SEE THIS</h3>
+									<a onclick="RefreshAllInsights()" class="button primary">Refresh</a>  
 								</header>
-								<div id = "content_InsightsTab">
-									<p>Work In Progress</p>
+								<div id = "content_InsightsTab">  
+									<div class="tab">
+										<button class="tablinks" onclick="openTab(event, 'BasicAPI')" id="defaultOpen">BasicAPI</button>
+										<button class="tablinks" onclick="openTab(event, 'GraphAPI')">GraphAPI</button>
+										<button class="tablinks" onclick="openTab(event, 'Giphy')">Giphy</button>
+									  </div>
+									  
+									  <div id="BasicAPI" class="tabcontent">
+										<h3>Instagram Basic API</h3>
+										<div id = "instagramBasicAPIContent" style = "text-align: left;">
+											<p>No Data Yet</p>
+										</div>
+									  </div>
+									  
+									  <div id="GraphAPI" class="tabcontent">
+										<h3>Instagram Graph API</h3>
+										<p>Work In Progress.</p> 
+									  </div>
+									  
+									  <div id="Giphy" class="tabcontent">
+										<h3>Giphy</h3>
+										<p>Work In Progress</p>
+									  </div>
+									  
+									  <script>
+									  function openTab(evt, tabName) {
+										var i, tabcontent, tablinks;
+										tabcontent = document.getElementsByClassName("tabcontent");
+										for (i = 0; i < tabcontent.length; i++) {
+										  tabcontent[i].style.display = "none";
+										}
+										tablinks = document.getElementsByClassName("tablinks");
+										for (i = 0; i < tablinks.length; i++) {
+										  tablinks[i].className = tablinks[i].className.replace(" active", ""); 
+										  tablinks[i].style.background = (tablinks[i].innerHTML === tabName)? '#c4c4c4':'white';
+										}
+										document.getElementById(tabName).style.display = "block";
+										evt.currentTarget.className += " active";
+									  }
+									  
+									  // Get the element with id="defaultOpen" and click on it
+									  document.getElementById("defaultOpen").click();
+									  </script>
+										 
+
 								<!--ul class="statistics">
 									<li class="style1">
 										<span class="icon solid fa-code-branch"></span>
@@ -201,7 +288,7 @@
 				//try to access existing cookie after the page loads:
 				let devMode = false;
 				let databaseURL = "https://goya1-bc87.restdb.io/";
-				let databaseK = "62eec7c6efe26c66934b7924";
+				let databaseK = "62eec7c6efe26c66934b7924";   
 				let savedUsername;
 				let savedAccessKey;
 
@@ -261,6 +348,30 @@
 				//useful references
 			 
 				//
+
+				function RefreshAllInsights()
+				{ 
+					let htmlData = "";
+					let dataObjects = GetBasicAPIFromDatabaseViaUsername(savedUsername);
+ 
+
+					for(let i = 0; i < dataObjects.length; i++)
+					{
+						console.log(dataObjects[i]);
+
+						let newData = 
+							"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
+							"Timestamp: " + dataObjects[i].instagram_timestamp + "<br>" + 
+							"Media Type: " + dataObjects[i].instagram_media_type + "<br>" +  
+							"Permalink: " +  '<a href="'+ dataObjects[i].instagram_permalink + '"> link</a><br>' + 
+							"Thumbnail URL: "+  '<a href="' + dataObjects[i].instagram_thumbnail_url + '"> link</a><br>' + 
+							"Caption: " + dataObjects[i].instagram_id + "<br><br>";
+
+						htmlData += newData; 
+					}
+
+					document.getElementById('instagramBasicAPIContent').innerHTML = htmlData;
+				}
   
 				function GetTokenDataFromDB()
 				{ 
@@ -272,6 +383,8 @@
 					document.getElementById('uname').style.display= 'none';
 					document.getElementById('uname_label').innerHTML = "Your username is: <b>" + savedUsername + "</b>";
 					document.getElementById('uname_label').style.display= 'block';
+
+					RefreshAllInsights();
 				}
 
 				//unlocks some sections if username has been inputted: 
@@ -333,15 +446,24 @@
 							console.log(obj[i].username);
 							if(obj[i].type == "instagram_basicAPI")
 							{
-								console.log(obj[i]);
+								//console.log(obj[i]);
 								document.getElementById('instagram_basicAPIAccessKey').textContent = obj[i].access_key; 
-								document.getElementById('instagram_basicAPISetDiv').style.display= 'none';
-								// 
+								document.getElementById('instagram_basicAPISetDiv').style.display= 'none'; 
+								if(obj[i].token !== undefined)
+								{
+									document.getElementById('instagram_basicAPIKeyLabel').textContent = "Current token:";
+									document.getElementById('instagram_basicAPIAccessKey').textContent = obj[i].token; 
+								} 
 							} 
 							if(obj[i].type == "instagram_graphAPI")
 							{
-								document.getElementById('instagram_graphAPIAccessKey').textContent = obj[i].access_key; 
+								document.getElementById('instagram_graphAPIAccessKey').textContent = obj[i].access_key;  
 								document.getElementById('instagram_graphAPISetDiv').style.display= 'none';
+								if(obj[i].token !== undefined)
+								{
+									document.getElementById('instagram_graphAPIKeyLabel').textContent = "Current token:";
+									document.getElementById('instagram_graphAPIAccessKey').textContent = obj[i].token; 
+								} 
 							}
 						} 
 					}
@@ -384,6 +506,35 @@
 					xhttp.send('{"access_key":"' + keyToSend + '","username":"' + savedUsername + '","type":"instagram_graphAPI"}');  
 					document.getElementById('instagram_graphAPIAccessKey').textContent = keyToSend; 
 					document.getElementById('instagram_graphAPISetDiv').style.display= 'none';  
+				}
+
+				function GetBasicAPIFromDatabaseViaUsername(_username)
+				{ 
+					let xhttp = new XMLHttpRequest();
+					xhttp.open("GET", databaseURL + "rest/basicapi", false);  
+					xhttp.setRequestHeader("Content-type", "application/json");
+					xhttp.setRequestHeader("x-apikey", databaseK);
+					xhttp.send(null); 
+					//console.log(xhttp.responseText);
+					const json = xhttp.responseText;
+					const obj = JSON.parse(json);
+
+					let userData = [];
+					let index = 0;
+					for(let i = 0; i < obj.length; i++)
+					{
+						if(obj[i].username === savedUsername) 
+						{ 
+							console.log(obj[i].value);
+							userData[index] = obj[i];//JSON.stringify(obj[i]);
+							index++;
+						} 
+					}
+
+					if(index == 0) 
+						return "No data available for <b>" + _username + "</b> yet!";
+					else 
+						return userData;
 				}
 														
 			</script> 
