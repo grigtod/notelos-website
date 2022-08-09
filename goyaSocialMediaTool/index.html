@@ -129,17 +129,35 @@
 										<span class="image"><img src="images/instagramLogo.png" alt="" /></span> 
 										<h3>Instagram - Graph API</h3>  
 										<div style="line-height:30px;">
-											<h6 id = "instagram_graphAPIKeyLabel">Current key:</h6>
-											<h6 id = "instagram_graphAPIAccessKey" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 12px;">[None]</h6>
+											<h6 id = "instagram_graphAPIKeyLabel">Current:</h6>
+											<h6 id = "instagram_graphAPIToken" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 12px;">[None]</h6>
+											<h6 id = "instagram_graphAPIID" style = "white-space: nowrap;overflow: clip;text-overflow: '...';font-size: 12px;">[None]</h6>
 											<br>
 										</div>
+
 										<div id="instagram_graphAPISetDiv"> 
 											Set manually: <br> 
-											<div style = "display:flex; height:15%;">
-												<input type="text" id="instagramGraphAPIAccessKeyInput" name="graphAPIAccessKeyInputName">  
-												<a onclick="SendInstaGraphAPIKeyToDB()" class="button primary">Apply</a>  
-											</div>
+
+											<h6>Token:</h6>
+												<input type="text" id="instagramGraphAPITokenInput" name="graphAPIAccessKeyInputName">  
+
+											<h6>ID:</h6>
+											<input type="text" id="instagramGraphAPIIDInput" name="graphAPIAccessKeyInputName">  
+											<br>
+											<div>
+												<a onclick="UseGoyaTokenAndID()" class="button small primary">Use Goya's</a>  &nbsp;  
+												<a onclick="SendInstaGraphAPIKeyToDB()" class="button small primary">Apply</a>  &nbsp; 
+											</div> 
 										</div>
+
+										<script>
+											function UseGoyaTokenAndID()
+											{
+												document.getElementById("instagramGraphAPITokenInput").value = "EAATZBgRwklBABAGDWZA99UPhUK6FpSm3TnsZC4Su6JqP2KhYGS5hab4shmV8pkzGitXWJdm5aGtTeraf10A6rGAXageqypxBxM4ViEpIYU7BhFuD2TpilbdurhxOMltZAEutv9DeAAZAP1O2WX6jXEebmZCutsKr9G9rTU8pSbjneonravLatA"; 
+												document.getElementById("instagramGraphAPIIDInput").value = "17841447989655560";  
+											}
+
+										</script>
 
 										<!--h6>Access Key <b>NOT</b> sent to database yet! </h6--> 
 										<!--button type="submit" onclick="SendTokenToDB()">Send Token to Database</button-->
@@ -357,7 +375,7 @@
 
 					for(let i = 0; i < dataObjects.length; i++)
 					{
-						console.log(dataObjects[i]);
+						//console.log(dataObjects[i]);
 
 						let newData = 
 							"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
@@ -457,12 +475,14 @@
 							} 
 							if(obj[i].type == "instagram_graphAPI")
 							{
-								document.getElementById('instagram_graphAPIAccessKey').textContent = obj[i].access_key;  
+								document.getElementById('instagram_graphAPIToken').textContent = obj[i].token;  
+								document.getElementById('instagram_graphAPIID').textCOntent = obj[i].page_id;
 								document.getElementById('instagram_graphAPISetDiv').style.display= 'none';
 								if(obj[i].token !== undefined)
 								{
-									document.getElementById('instagram_graphAPIKeyLabel').textContent = "Current token:";
-									document.getElementById('instagram_graphAPIAccessKey').textContent = obj[i].token; 
+									document.getElementById('instagram_graphAPIKeyLabel').textContent = "Current:";
+									document.getElementById('instagram_graphAPIToken').textContent = obj[i].token; 
+									document.getElementById('instagram_graphAPIID').textContent = obj[i].page_id;
 								} 
 							}
 						} 
@@ -492,8 +512,8 @@
 
 				function SendInstaGraphAPIKeyToDB()
 				{  
-					let keyToSend = document.getElementById('instagramGraphAPIAccessKeyInput').value;
-
+					let tokenToSend = document.getElementById('instagramGraphAPITokenInput').value;
+					let idToSend = document.getElementById('instagramGraphAPIIDInput').value;
 					var xhttp = new XMLHttpRequest();
 					xhttp.onreadystatechange = function() {
 						if (this.readyState == 4 && this.status == 200) {
@@ -503,8 +523,9 @@
 					xhttp.open("POST", databaseURL + "rest/tokens", true);
 					xhttp.setRequestHeader("Content-type", "application/json");
 					xhttp.setRequestHeader("x-apikey", databaseK); 
-					xhttp.send('{"access_key":"' + keyToSend + '","username":"' + savedUsername + '","type":"instagram_graphAPI"}');  
-					document.getElementById('instagram_graphAPIAccessKey').textContent = keyToSend; 
+					xhttp.send('{"access_key":"' + "none" + '","token":"' + tokenToSend + '","page_id":"' + idToSend +'","username":"' + savedUsername + '","type":"instagram_graphAPI"}');  
+					document.getElementById('instagram_graphAPIToken').textContent = tokenToSend; 
+					document.getElementById('instagram_graphAPIID').textContent = idToSend; 
 					document.getElementById('instagram_graphAPISetDiv').style.display= 'none';  
 				}
 
