@@ -47,6 +47,47 @@
 			  border: 1px solid #ccc;
 			  border-top: none;
 			}
+
+
+
+			/* This css is for the accordion for graphapi */ 
+			.accordion {
+				background-color: #eee;
+				color: #444;
+				cursor: pointer;
+				padding: 12px;
+				width: 100%;
+				border: none;
+				text-align: left;
+				outline: none;
+				font-size: 15px;
+				transition: 0.4s; 
+			}
+
+			.active, .accordion:hover {
+			
+			}
+
+			.accordion:after {
+				content: '\002B';
+				color: #777;
+				font-weight: bold;
+				float: right;
+				margin-left: 5px;
+			}
+
+			.active:after {
+				content: "\2212";
+			}
+
+			.panel {
+				padding: 0 18px;
+				background-color: white;
+				max-height: 0;
+				overflow: hidden;
+				text-align: left;
+				transition: max-height 0.2s ease-out;
+			}
 			</style>
 
 
@@ -184,8 +225,47 @@
 									  </div>
 									  
 									  <div id="GraphAPI" class="tabcontent">
-										<h3>Instagram Graph API</h3>
-										<p>Work In Progress.</p> 
+										<h3>Instagram Graph API</h3> 
+										<div id = "instagramGraphAPIContent_userStats" style = "text-align: left;">
+											<p>No Data Yet</p>
+										</div>
+
+										<div id = "instagramGraphAPIContent_posts" style = "text-align: left;"> 
+										</div>
+
+										<!--	<b><h4>User Stats:</h4></b>
+
+											<b>Followers Count:</b> Null
+											<br>
+											<b>Follows Count: </b>  Null
+											<br><br>
+											<b><h4>All Stories:</b> <br> NONE</h4> 
+											<b></b><h4>All Posts:</h3></b>
+											<b><h4>All Stories:</b> <br> NONE</h4> -->
+											<!--h3 class="accordion">Media Name</h3>
+											<div class="panel">
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+											</div>
+
+											<h3 class="accordion">Media Name</h3>
+											<div class="panel">
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+											</div>
+
+											<h3 class="accordion">Media Name</h3>
+											<div class="panel">
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+											</div>
+
+											<h3 class="accordion">Media Name</h3>
+											<div class="panel">
+											<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+											</div-->
+										
+										
+
+										
+
 									  </div>
 									  
 									  <div id="Giphy" class="tabcontent">
@@ -290,6 +370,30 @@
 			</div>
 
 		<!-- Scripts -->
+
+			<script>
+				//This script makes the accordion feature work: 
+
+				function SetAllAccordions()
+				{
+					var acc = document.getElementsByClassName("accordion");
+					var i;
+
+					for (i = 0; i < acc.length; i++) {
+					acc[i].addEventListener("click", function() {
+						console.log("Accordion event triggered!");
+						this.classList.toggle("active");
+						var panel = this.nextElementSibling;
+						if (panel.style.maxHeight) {
+						panel.style.maxHeight = null;
+						} else {
+						panel.style.maxHeight = panel.scrollHeight + "px";
+						} 
+					});
+					}
+				}
+				
+			</script>
 			<script>
 				//Cookies related only:
 				
@@ -359,30 +463,92 @@
 
 				function RefreshAllInsights()
 				{  
+
+					//basic api:
 					let htmlData = "";
-					let dataObjects = GetBasicAPIFromDatabaseViaUsername(savedUsername);
+					let dataObjects = GetUserDataFromCollection(savedUsername, "basicapi");
 					
 					if(dataObjects != null)
 					{
 						for(let i = 0; i < dataObjects.length; i++)
-					{ 
-						let newData = 
-							"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
-							"Timestamp: " + dataObjects[i].instagram_timestamp + "<br>" + 
-							"Media Type: " + dataObjects[i].instagram_media_type + "<br>" +  
-							"Permalink: " +  '<a href="'+ dataObjects[i].instagram_permalink + '"> link</a><br>' + 
-							"Thumbnail URL: "+  '<a href="' + dataObjects[i].instagram_thumbnail_url + '"> link</a><br>' + 
-							"Caption: " + dataObjects[i].instagram_id + "<br><br>";
+						{ 
+							let accordionInternalElement = 
+								"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
+								"Timestamp: " + dataObjects[i].instagram_timestamp + "<br>" + 
+								"Media Type: " + dataObjects[i].instagram_media_type + "<br>" +  
+								"Permalink: " +  '<a href="'+ dataObjects[i].instagram_permalink + '"> link</a><br>' + 
+								"Thumbnail URL: "+  '<a href="' + dataObjects[i].instagram_thumbnail_url + '"> link</a><br>' + 
+								"Instagram ID: " + dataObjects[i].instagram_id;
 
-						htmlData += newData; 
-					}
+							let title = dataObjects[i].instagram_id + ' - ' + dataObjects[i].instagram_caption;
+							if(title.length > 139) title = title.substr(0, 137) + "...";
+						 
+							let newData =  '<h3 class="accordion">' + title + '</h3><div class="panel"><p>'+ accordionInternalElement +'</p></div>';
 
-					document.getElementById('instagramBasicAPIContent').innerHTML = htmlData;  
+							/*'<h3 class="accordion">' + dataObjects[i].instagram_id + '</h3> <br> '+ 
+								'<div class="panel">' +  "asdsadsadsad asd asd" + 
+								"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
+								"Timestamp: " + dataObjects[i].instagram_timestamp + "<br>" + 
+								"Media Type: " + dataObjects[i].instagram_media_type + "<br>" +  
+								"Permalink: " +  '<a href="'+ dataObjects[i].instagram_permalink + '"> link</a><br>' + 
+								"Thumbnail URL: "+  '<a href="' + dataObjects[i].instagram_thumbnail_url + '"> link</a><br>' + 
+								"Caption: " + dataObjects[i].instagram_id + "<br><br>" + '</div>';*/
+
+							htmlData += newData; 
+						}
+
+						document.getElementById('instagramBasicAPIContent').innerHTML = htmlData;  
 					}
 					else
 					{
 						document.getElementById('instagramBasicAPIContent').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
+					}
+ 
+					//graph api - user stats:
+
+					let graphAPIUserInsightsHTMLData = "";
+					let dataObjectsUserInsights = GetUserDataFromCollection(savedUsername, "graphapi-userinsights");
+					if(dataObjectsUserInsights.length > 0)
+					{
+						graphAPIUserInsightsHTMLData = '<b>Followers Count: </b>' + dataObjectsUserInsights[0].followers_count + '<br>' + '<b>Follows Count: </b>' + dataObjectsUserInsights[0].follows_count + '<br><br>'; 
+						document.getElementById('instagramGraphAPIContent_userStats').innerHTML = graphAPIUserInsightsHTMLData;  
+					}
+					else
+					{
+						document.getElementById('instagramGraphAPIContent_userStats').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
 					} 
+
+					//graph api - posts
+					let graphAPIPostsHTMLData = "";
+					let graphAPIMediaList = GetUserDataFromCollection(savedUsername, "graphapi-medialist");
+					console.log(graphAPIMediaList);
+					if(graphAPIMediaList.length > 0)
+					{
+						for(let i = 0; i < graphAPIMediaList.length; i++)
+						{ 
+							let accordionInternalElement = 
+								"Caption: " + graphAPIMediaList[i].caption + "<br>" + 
+								"Timestamp: " + graphAPIMediaList[i].timestamp + "<br>" + 
+								"Media Type: " + graphAPIMediaList[i].media_type + "<br>" +  
+								"Permalink: " +  '<a href="'+ graphAPIMediaList[i].permalink + '"> link</a><br>' + 
+								"Thumbnail URL: "+  '<a href="' + graphAPIMediaList[i].thumbnail_url + '"> link</a><br>' + 
+								"Media ID: " + graphAPIMediaList[i].media_id;
+
+							let title = graphAPIMediaList[i].media_id + ' - ' + graphAPIMediaList[i].caption;
+							if(title.length > 139) title = title.substr(0, 137) + "...";
+						 
+							let newData =  '<h3 class="accordion">' + title + '</h3><div class="panel"><p>'+ accordionInternalElement +'</p></div>'; 
+
+							graphAPIPostsHTMLData += newData; 
+						}
+						document.getElementById('instagramGraphAPIContent_posts').innerHTML = graphAPIPostsHTMLData;   
+					}
+					else
+					{
+						document.getElementById('instagramGraphAPIContent_posts').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
+					}
+
+					SetAllAccordions(); 
 				}
   
 				function GetTokenDataFromDB()
@@ -402,9 +568,7 @@
 				//unlocks some sections if username has been inputted: 
 				function toggleUnameApplyButton()
 				{ 
-					document.getElementById('uname_applyButton').style.display=(savedUsername !== "")?'block':'none';
-					
-					
+					document.getElementById('uname_applyButton').style.display=(savedUsername !== "")?'block':'none'; 
 				}
 
 				function toggleUsernameDependantFeatures (_newState) {
@@ -522,15 +686,14 @@
 					document.getElementById('instagram_graphAPIID').textContent = idToSend; 
 					document.getElementById('instagram_graphAPISetDiv').style.display= 'none';  
 				}
-
-				function GetBasicAPIFromDatabaseViaUsername(_username)
-				{ 
+ 
+				function GetUserDataFromCollection(_username, _collectionName)
+				{
 					let xhttp = new XMLHttpRequest();
-					xhttp.open("GET", databaseURL + "rest/basicapi", false);  
+					xhttp.open("GET", databaseURL + "rest/" + _collectionName, false);  
 					xhttp.setRequestHeader("Content-type", "application/json");
 					xhttp.setRequestHeader("x-apikey", databaseK);
 					xhttp.send(null); 
-					//console.log(xhttp.responseText);
 					const json = xhttp.responseText;
 					const obj = JSON.parse(json);
 
@@ -539,8 +702,7 @@
 					for(let i = 0; i < obj.length; i++)
 					{
 						if(obj[i].username === savedUsername) 
-						{ 
-							console.log(obj[i].value);
+						{  
 							userData[index] = obj[i];//JSON.stringify(obj[i]);
 							index++;
 						} 
@@ -553,8 +715,7 @@
 					else 
 					{ 
 						return userData;
-					}
-						
+					} 	
 				}
 														
 			</script> 
