@@ -81,12 +81,30 @@
 			}
 
 			.panel {
-				padding: 0 18px;
+				padding: 0 81px;
 				background-color: white;
 				max-height: 0;
 				overflow: hidden;
 				text-align: left;
 				transition: max-height 0.2s ease-out;
+			}
+
+			table {
+			font-size: 0.5em;
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+			}
+
+			td, th {
+				font-size: 0.5em;
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 1px;
+			}
+
+			tr:nth-child(even) {
+			background-color: #dddddd;
 			}
 			</style>
 
@@ -212,8 +230,8 @@
 								</header>
 								<div id = "content_InsightsTab">  
 									<div class="tab">
-										<button class="tablinks" onclick="openTab(event, 'BasicAPI')" id="defaultOpen">BasicAPI</button>
-										<button class="tablinks" onclick="openTab(event, 'GraphAPI')">GraphAPI</button>
+										<button class="tablinks" onclick="openTab(event, 'BasicAPI')">BasicAPI</button>
+										<button class="tablinks" onclick="openTab(event, 'GraphAPI')" id="defaultOpen">GraphAPI</button>
 										<button class="tablinks" onclick="openTab(event, 'Giphy')">Giphy</button>
 									  </div>
 									  
@@ -466,7 +484,7 @@
 
 					//basic api:
 					let htmlData = "";
-					let dataObjects = GetUserDataFromCollection(savedUsername, "basicapi");
+					let dataObjects = GetDataFromCollection(savedUsername, "basicapi");
 					
 					if(dataObjects != null)
 					{
@@ -505,9 +523,10 @@
 					}
  
 					//graph api - user stats:
+ 
 
 					let graphAPIUserInsightsHTMLData = "";
-					let dataObjectsUserInsights = GetUserDataFromCollection(savedUsername, "graphapi-userinsights");
+					let dataObjectsUserInsights = GetDataFromCollection(savedUsername, "graphapi-userinsights");
 					if(dataObjectsUserInsights.length > 0)
 					{
 						graphAPIUserInsightsHTMLData = '<b>Followers Count: </b>' + dataObjectsUserInsights[0].followers_count + '<br>' + '<b>Follows Count: </b>' + dataObjectsUserInsights[0].follows_count + '<br><br>'; 
@@ -518,9 +537,15 @@
 						document.getElementById('instagramGraphAPIContent_userStats').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
 					} 
 
+					
 					//graph api - posts
+ 
+					let dataPostInsights = GetDataFromCollection(savedUsername, "graphapi-mediainsights");
+					//console.log(">>>>>>>>>>>>>>>>>>>>>>>>>" +  dataPostInsights.length);
+
+
 					let graphAPIPostsHTMLData = "";
-					let graphAPIMediaList = GetUserDataFromCollection(savedUsername, "graphapi-medialist");
+					let graphAPIMediaList = GetDataFromCollection(savedUsername, "graphapi-medialist");
 					console.log(graphAPIMediaList);
 					if(graphAPIMediaList.length > 0)
 					{
@@ -533,6 +558,72 @@
 								"Permalink: " +  '<a href="'+ graphAPIMediaList[i].permalink + '"> link</a><br>' + 
 								"Thumbnail URL: "+  '<a href="' + graphAPIMediaList[i].thumbnail_url + '"> link</a><br>' + 
 								"Media ID: " + graphAPIMediaList[i].media_id;
+
+							//now add insights to the bottom:
+							accordionInternalElement += "<br>---------------------<br>All Insight Queries:<br>"; 
+							accordionInternalElement += "<table>";
+								accordionInternalElement+= "<tr>";
+									accordionInternalElement+="<th>Timestamp</th>";
+									accordionInternalElement+="<th>Comments Count</th>";
+									accordionInternalElement+="<th>Likes Count</th>";
+									accordionInternalElement+="<th>Engagement</th>";
+									accordionInternalElement+="<th>Impressions</th>";
+									accordionInternalElement+="<th>Reach</th>";
+									accordionInternalElement+="<th>Saved</th>";
+									accordionInternalElement+="<th>Video Views</th>";
+									accordionInternalElement+="<th>Album Engagement</th>";
+									accordionInternalElement+="<th>Album Impressions</th>";
+									accordionInternalElement+="<th>Album Reach</th>";
+									accordionInternalElement+="<th>Album Saved</th>";
+									accordionInternalElement+="<th>Exits</th>";
+									accordionInternalElement+="<th>Replies</th>";
+									accordionInternalElement+="<th>Taps_forward</th>";
+									accordionInternalElement+="<th>Taps_back</th>";
+									accordionInternalElement += "</tr>";
+ 
+							for(let j = 0; j < dataPostInsights.length; j++)
+							{ 
+								if(dataPostInsights[j].media_id == graphAPIMediaList[i].media_id)
+								{
+									accordionInternalElement += "<tr>"+ 
+										"<td>" +dataPostInsights[j].query_timestamp + "</td>"+
+										"<td>" +dataPostInsights[j].comments_count + "</td>"+
+										"<td>" +dataPostInsights[j].like_count + "</td>"+
+										"<td>" +dataPostInsights[j].engagement + "</td>"+
+										"<td>" +dataPostInsights[j].impressions + "</td>"+
+										"<td>" +dataPostInsights[j].reach + "</td>"+
+										"<td>" +dataPostInsights[j].saved + "</td>"+
+										"<td>" +dataPostInsights[j].video_views + "</td>"+
+										"<td>" +dataPostInsights[j].carousel_album_engagement + "</td>"+
+										"<td>" +dataPostInsights[j].carousel_album_impressions + "</td>"+
+										"<td>" +dataPostInsights[j].carousel_album_reach + "</td>"+
+										"<td>" +dataPostInsights[j].carousel_album_saved + "</td>"+
+										"<td>" +dataPostInsights[j].exits + "</td>"+
+										"<td>" +dataPostInsights[j].replies + "</td>"+
+										"<td>" +dataPostInsights[j].taps_forward + "</td>"+
+										"<td>" +dataPostInsights[j].taps_back + "</td></tr>";
+
+									/*let thisElementContent = "Query Timestamp: " +  + "<br>" +
+																"Comments Count: " + dataPostInsights[j].comments_count + "<br>" +
+																"Likes Count: " + dataPostInsights[j].like_count + "<br>" +
+																"Engagement: " + dataPostInsights[j].engagement + "<br>" +
+																"Impressions: " + dataPostInsights[j].impressions + "<br>" +
+																"Reach: " + dataPostInsights[j].reach + "<br>" +
+																"Saved: " + dataPostInsights[j].saved + "<br>" + 
+																"Video Views: " + dataPostInsights[j].video_views + "<br>" + 
+																"Saved: " + dataPostInsights[j].carousel_album_engagement + "<br>" + 
+																"Saved: " + dataPostInsights[j].carousel_album_impressions + "<br>" + 
+																"Saved: " + dataPostInsights[j].carousel_album_reach + "<br>" + 
+																"Saved: " + dataPostInsights[j].carousel_album_saved + "<br>" + 
+																"Saved: " + dataPostInsights[j].exits + "<br>" + 
+																"Saved: " + dataPostInsights[j].replies + "<br>" + 
+																"Saved: " + dataPostInsights[j].taps_forward + "<br>" + 
+																"Saved: " + dataPostInsights[j].taps_back; */
+
+									//accordionInternalElement += '<h3 class="accordion">' + dataPostInsights[j].query_timestamp + '</h3><div class="panel"><p>' + thisElementContent + '</p></div>'; 
+								}
+							}
+							accordionInternalElement += "</table>"; 
 
 							let title = graphAPIMediaList[i].media_id + ' - ' + graphAPIMediaList[i].caption;
 							if(title.length > 139) title = title.substr(0, 137) + "...";
@@ -687,7 +778,7 @@
 					document.getElementById('instagram_graphAPISetDiv').style.display= 'none';  
 				}
  
-				function GetUserDataFromCollection(_username, _collectionName)
+				function GetDataFromCollection(_username, _collectionName)
 				{
 					let xhttp = new XMLHttpRequest();
 					xhttp.open("GET", databaseURL + "rest/" + _collectionName, false);  
