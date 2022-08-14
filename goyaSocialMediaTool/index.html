@@ -144,21 +144,11 @@
 											<h6>ID:</h6>
 											<input type="text" id="instagramGraphAPIIDInput" name="graphAPIAccessKeyInputName">  
 											<br>
-											<div>
-												<a onclick="UseGoyaTokenAndID()" class="button small primary">Use Goya's</a>  &nbsp;  
+											<div> 
 												<a onclick="SendInstaGraphAPIKeyToDB()" class="button small primary">Apply</a>  &nbsp; 
 											</div> 
 										</div>
-
-										<script>
-											function UseGoyaTokenAndID()
-											{
-												document.getElementById("instagramGraphAPITokenInput").value = "EAATZBgRwklBABAGDWZA99UPhUK6FpSm3TnsZC4Su6JqP2KhYGS5hab4shmV8pkzGitXWJdm5aGtTeraf10A6rGAXageqypxBxM4ViEpIYU7BhFuD2TpilbdurhxOMltZAEutv9DeAAZAP1O2WX6jXEebmZCutsKr9G9rTU8pSbjneonravLatA"; 
-												document.getElementById("instagramGraphAPIIDInput").value = "17841447989655560";  
-											}
-
-										</script>
-
+  
 										<!--h6>Access Key <b>NOT</b> sent to database yet! </h6--> 
 										<!--button type="submit" onclick="SendTokenToDB()">Send Token to Database</button-->
 									</li>
@@ -177,7 +167,7 @@
 								<header class="major">
 									<h2>Insights</h2>
 									<h3 id = "warning_InsightsTab">PLEASE COMPLETE INFO SECTION TO SEE THIS</h3>
-									<a onclick="RefreshAllInsights()" class="button primary">Refresh</a>  
+									<!--a onclick="RefreshAllInsights()" class="button primary">Refresh</a-->  
 								</header>
 								<div id = "content_InsightsTab">  
 									<div class="tab">
@@ -308,7 +298,7 @@
 				let databaseURL = "https://goya1-bc87.restdb.io/";
 				let databaseK = "62eec7c6efe26c66934b7924";   
 				let savedUsername;
-				let savedAccessKey;
+				let savedAccessKey; 
 
 				window.addEventListener('load',() => {
 					savedUsername = getCookie("username");  
@@ -368,15 +358,14 @@
 				//
 
 				function RefreshAllInsights()
-				{ 
+				{  
 					let htmlData = "";
 					let dataObjects = GetBasicAPIFromDatabaseViaUsername(savedUsername);
- 
-
-					for(let i = 0; i < dataObjects.length; i++)
+					
+					if(dataObjects != null)
 					{
-						//console.log(dataObjects[i]);
-
+						for(let i = 0; i < dataObjects.length; i++)
+					{ 
 						let newData = 
 							"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
 							"Timestamp: " + dataObjects[i].instagram_timestamp + "<br>" + 
@@ -388,7 +377,12 @@
 						htmlData += newData; 
 					}
 
-					document.getElementById('instagramBasicAPIContent').innerHTML = htmlData;
+					document.getElementById('instagramBasicAPIContent').innerHTML = htmlData;  
+					}
+					else
+					{
+						document.getElementById('instagramBasicAPIContent').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
+					} 
 				}
   
 				function GetTokenDataFromDB()
@@ -551,11 +545,16 @@
 							index++;
 						} 
 					}
-
+ 
 					if(index == 0) 
-						return "No data available for <b>" + _username + "</b> yet!";
+					{ 
+						return null; 
+					}
 					else 
+					{ 
 						return userData;
+					}
+						
 				}
 														
 			</script> 
