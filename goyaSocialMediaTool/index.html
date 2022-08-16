@@ -81,7 +81,7 @@
 			}
 
 			.panel {
-				padding: 0 81px;
+				padding: 0 11px;
 				background-color: white;
 				max-height: 0;
 				overflow: hidden;
@@ -97,7 +97,7 @@
 			}
 
 			td, th {
-				font-size: 0.5em;
+				font-size: 0.8em;
 			border: 1px solid #dddddd;
 			text-align: left;
 			padding: 1px;
@@ -541,23 +541,22 @@
 					//graph api - posts
  
 					let dataPostInsights = GetDataFromCollection(savedUsername, "graphapi-mediainsights");
-					//console.log(">>>>>>>>>>>>>>>>>>>>>>>>>" +  dataPostInsights.length);
-
-
+					let graphAPIStoriesHTMLData = "";
 					let graphAPIPostsHTMLData = "";
 					let graphAPIMediaList = GetDataFromCollection(savedUsername, "graphapi-medialist");
-					console.log(graphAPIMediaList);
 					if(graphAPIMediaList.length > 0)
 					{
 						for(let i = 0; i < graphAPIMediaList.length; i++)
-						{ 
+						{  
+							let permalinkToSet = (graphAPIMediaList[i].permalink !="") ? ("Permalink: " +  '<a href="'+ graphAPIMediaList[i].permalink + '"> link</a><br>') : "";
+							let mediaURLToSet =  (graphAPIMediaList[i].media_url !="") ? ("Media URL: "+  '<a href="' + graphAPIMediaList[i].media_url + '"> link</a><br>') : "";
 							let accordionInternalElement = 
 								"Caption: " + graphAPIMediaList[i].caption + "<br>" + 
 								"Timestamp: " + graphAPIMediaList[i].timestamp + "<br>" + 
 								"Media Type: " + graphAPIMediaList[i].media_type + "<br>" +  
 								"Media Product Type: " + graphAPIMediaList[i].media_product_type + "<br>" +  
-								"Permalink: " +  '<a href="'+ graphAPIMediaList[i].permalink + '"> link</a><br>' + 
-								"Media URL: "+  '<a href="' + graphAPIMediaList[i].media_url + '"> link</a><br>' + 
+								permalinkToSet + 
+								mediaURLToSet + 
 								"Media ID: " + graphAPIMediaList[i].media_id;
 
 							//now add insights to the bottom:
@@ -581,9 +580,9 @@
 									accordionInternalElement+="<th>Taps_forward</th>";
 									accordionInternalElement+="<th>Taps_back</th>";
 									accordionInternalElement += "</tr>";
- 
+						
 							for(let j = 0; j < dataPostInsights.length; j++)
-							{ 
+							{  
 								if(dataPostInsights[j].media_id == graphAPIMediaList[i].media_id)
 								{
 									accordionInternalElement += "<tr>"+ 
@@ -603,25 +602,6 @@
 										"<td>" +dataPostInsights[j].replies + "</td>"+
 										"<td>" +dataPostInsights[j].taps_forward + "</td>"+
 										"<td>" +dataPostInsights[j].taps_back + "</td></tr>";
-
-									/*let thisElementContent = "Query Timestamp: " +  + "<br>" +
-																"Comments Count: " + dataPostInsights[j].comments_count + "<br>" +
-																"Likes Count: " + dataPostInsights[j].like_count + "<br>" +
-																"Engagement: " + dataPostInsights[j].engagement + "<br>" +
-																"Impressions: " + dataPostInsights[j].impressions + "<br>" +
-																"Reach: " + dataPostInsights[j].reach + "<br>" +
-																"Saved: " + dataPostInsights[j].saved + "<br>" + 
-																"Video Views: " + dataPostInsights[j].video_views + "<br>" + 
-																"Saved: " + dataPostInsights[j].carousel_album_engagement + "<br>" + 
-																"Saved: " + dataPostInsights[j].carousel_album_impressions + "<br>" + 
-																"Saved: " + dataPostInsights[j].carousel_album_reach + "<br>" + 
-																"Saved: " + dataPostInsights[j].carousel_album_saved + "<br>" + 
-																"Saved: " + dataPostInsights[j].exits + "<br>" + 
-																"Saved: " + dataPostInsights[j].replies + "<br>" + 
-																"Saved: " + dataPostInsights[j].taps_forward + "<br>" + 
-																"Saved: " + dataPostInsights[j].taps_back; */
-
-									//accordionInternalElement += '<h3 class="accordion">' + dataPostInsights[j].query_timestamp + '</h3><div class="panel"><p>' + thisElementContent + '</p></div>'; 
 								}
 							}
 							accordionInternalElement += "</table>"; 
@@ -631,9 +611,14 @@
 						 
 							let newData =  '<h3 class="accordion">' + title + '</h3><div class="panel"><p>'+ accordionInternalElement +'</p></div>'; 
 
-							graphAPIPostsHTMLData += newData; 
+							if(graphAPIMediaList[i].media_type == "STORY")
+							{
+								console.log("Story added to data!");
+								graphAPIStoriesHTMLData += newData; 
+							}
+							else graphAPIPostsHTMLData += newData; 
 						}
-						document.getElementById('instagramGraphAPIContent_posts').innerHTML = graphAPIPostsHTMLData;   
+						document.getElementById('instagramGraphAPIContent_posts').innerHTML = "<h3>Stories:</h3>" + graphAPIStoriesHTMLData + "<br><br><br><h3>Posts:</h3>"+ graphAPIPostsHTMLData;   
 					}
 					else
 					{
