@@ -168,6 +168,11 @@
 								</header>
 								<div id = "content_ConnectTab"> 
 								<ul class="features"> 
+									<li>
+										<span class="image"><img src="images/giphyLogo.png" alt="" /></span> 
+										<h3>Giphy</h3>
+										<p>Configured only for username: grigtod</p>
+									</li>
 									<li style="overflow: hidden;text-overflow: '...';">
 										<span class="image"><img src="images/instagramLogo.png" alt="" /></span> 
 										
@@ -210,12 +215,7 @@
   
 										<!--h6>Access Key <b>NOT</b> sent to database yet! </h6--> 
 										<!--button type="submit" onclick="SendTokenToDB()">Send Token to Database</button-->
-									</li>
-									<li>
-										<span class="image"><img src="images/giphyLogo.png" alt="" /></span> 
-										<h3>Giphy</h3>
-										<p>Work In Progress</p>
-									</li>
+									</li> 
 								</ul> 
 							</div> 
 
@@ -230,9 +230,9 @@
 								</header>
 								<div id = "content_InsightsTab">  
 									<div class="tab">
+										<button class="tablinks" onclick="openTab(event, 'Giphy')" id="defaultOpen">Giphy</button>
 										<button class="tablinks" onclick="openTab(event, 'BasicAPI')">BasicAPI</button>
-										<button class="tablinks" onclick="openTab(event, 'GraphAPI')" id="defaultOpen">GraphAPI</button>
-										<button class="tablinks" onclick="openTab(event, 'Giphy')">Giphy</button>
+										<button class="tablinks" onclick="openTab(event, 'GraphAPI')">GraphAPI</button> 
 									  </div>
 									  
 									  <div id="BasicAPI" class="tabcontent">
@@ -288,7 +288,9 @@
 									  
 									  <div id="Giphy" class="tabcontent">
 										<h3>Giphy</h3>
-										<p>Work In Progress</p>
+										<div id = "giphyContent_userStats" style = "text-align: left;">
+											<p>No Data Yet</p>
+										</div> 
 									  </div>
 									  
 									  <script>
@@ -481,7 +483,7 @@
 
 				function RefreshAllInsights()
 				{  
-
+					
 					//basic api:
 					let htmlData = "";
 					let dataObjects = GetDataFromCollection(savedUsername, "basicapi");
@@ -489,8 +491,9 @@
 					if(dataObjects != null)
 					{
 						for(let i = 0; i < dataObjects.length; i++)
-						{ 
-							let accordionInternalElement = 
+						{  
+							accordionInternalElement =
+							    (dataObjects[i].instagram_thumbnail_url == ""?"": '<img style = "width:50%;height:auto;" src="' + dataObjects[i].instagram_thumbnail_url + '" alt="Image"><br>') +
 								"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
 								"Timestamp: " + dataObjects[i].instagram_timestamp + "<br>" + 
 								"Media Type: " + dataObjects[i].instagram_media_type + "<br>" +  
@@ -501,16 +504,7 @@
 							let title = dataObjects[i].instagram_id + ' - ' + dataObjects[i].instagram_caption;
 							if(title.length > 139) title = title.substr(0, 137) + "...";
 						 
-							let newData =  '<h3 class="accordion">' + title + '</h3><div class="panel"><p>'+ accordionInternalElement +'</p></div>';
-
-							/*'<h3 class="accordion">' + dataObjects[i].instagram_id + '</h3> <br> '+ 
-								'<div class="panel">' +  "asdsadsadsad asd asd" + 
-								"Caption: " + dataObjects[i].instagram_caption + "<br>" + 
-								"Timestamp: " + dataObjects[i].instagram_timestamp + "<br>" + 
-								"Media Type: " + dataObjects[i].instagram_media_type + "<br>" +  
-								"Permalink: " +  '<a href="'+ dataObjects[i].instagram_permalink + '"> link</a><br>' + 
-								"Thumbnail URL: "+  '<a href="' + dataObjects[i].instagram_thumbnail_url + '"> link</a><br>' + 
-								"Caption: " + dataObjects[i].instagram_id + "<br><br>" + '</div>';*/
+							let newData =  '<h3 class="accordion">' + title + '</h3><div class="panel"><p>'+ accordionInternalElement +'</p></div>'; 
 
 							htmlData += newData; 
 						}
@@ -524,10 +518,10 @@
  
 					//graph api - user stats:
  
-
+					
 					let graphAPIUserInsightsHTMLData = "";
 					let dataObjectsUserInsights = GetDataFromCollection(savedUsername, "graphapi-userinsights");
-					if(dataObjectsUserInsights.length > 0)
+					if(dataObjectsUserInsights != null &&dataObjectsUserInsights.length > 0)
 					{
 						graphAPIUserInsightsHTMLData = '<b>Followers Count: </b>' + dataObjectsUserInsights[0].followers_count + '<br>' + '<b>Follows Count: </b>' + dataObjectsUserInsights[0].follows_count + '<br><br>'; 
 						document.getElementById('instagramGraphAPIContent_userStats').innerHTML = graphAPIUserInsightsHTMLData;  
@@ -536,21 +530,21 @@
 					{
 						document.getElementById('instagramGraphAPIContent_userStats').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
 					} 
-
-					
-					//graph api - posts
  
-					let dataPostInsights = GetDataFromCollection(savedUsername, "graphapi-mediainsights");
+					//graph api - posts
+					
+					let dataPostInsights = GetDataFromCollection("", "graphapi-mediainsights");
 					let graphAPIStoriesHTMLData = "";
 					let graphAPIPostsHTMLData = "";
 					let graphAPIMediaList = GetDataFromCollection(savedUsername, "graphapi-medialist");
-					if(graphAPIMediaList.length > 0)
+					if(graphAPIMediaList  != null && graphAPIMediaList.length > 0)
 					{
 						for(let i = 0; i < graphAPIMediaList.length; i++)
 						{  
 							let permalinkToSet = (graphAPIMediaList[i].permalink !="") ? ("Permalink: " +  '<a href="'+ graphAPIMediaList[i].permalink + '"> link</a><br>') : "";
 							let mediaURLToSet =  (graphAPIMediaList[i].media_url !="") ? ("Media URL: "+  '<a href="' + graphAPIMediaList[i].media_url + '"> link</a><br>') : "";
-							let accordionInternalElement = 
+							let accordionInternalElement = (graphAPIMediaList[i].media_url !="")?'<img style = "width:50%;height:auto;" src="' + graphAPIMediaList[i].media_url + '" alt="Image"><br>' : "";
+							accordionInternalElement +=
 								"Caption: " + graphAPIMediaList[i].caption + "<br>" + 
 								"Timestamp: " + graphAPIMediaList[i].timestamp + "<br>" + 
 								"Media Type: " + graphAPIMediaList[i].media_type + "<br>" +  
@@ -580,7 +574,7 @@
 									accordionInternalElement+="<th>Taps_forward</th>";
 									accordionInternalElement+="<th>Taps_back</th>";
 									accordionInternalElement += "</tr>";
-						
+									
 							for(let j = 0; j < dataPostInsights.length; j++)
 							{  
 								if(dataPostInsights[j].media_id == graphAPIMediaList[i].media_id)
@@ -624,7 +618,62 @@
 					{
 						document.getElementById('instagramGraphAPIContent_posts').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
 					}
+					
+					//giphy 
+					
+					let giphyData = ""
+					let giphyContentanalytics = GetDataFromCollection("", "giphy-contentanalytics"); 
+					let giphyContentList = GetDataFromCollection(savedUsername, "giphy-contentlist");
 
+					if(giphyContentList != null && giphyContentList.length > 0)
+					{
+						for(let i = 0; i < giphyContentList.length; i++)
+						{  
+							let contentURL = (giphyContentList[i].content_url !="") ? ("Content URL: " +  '<a target="_blank" href="'+ giphyContentList[i].content_url + '"> link</a><br>') : "";
+							let accordionInternalElement = 
+							    '<img style = "width:50%;height:auto;" src="https://i.giphy.com/media/' + giphyContentList[i].content_id + '/giphy.webp" alt="Italian Trulli"><br>' + 
+								"Content ID: " + giphyContentList[i].content_id + "<br>" + 
+								"Content Type: " + giphyContentList[i].content_type + "<br>" + 
+								contentURL;
+
+							if(giphyContentanalytics != null && giphyContentanalytics.length > 0)
+							{
+								accordionInternalElement += "<table>";
+								accordionInternalElement+= "<tr>";
+									accordionInternalElement+="<th>Timestamp</th>";
+									accordionInternalElement+="<th>Content ID</th>";
+									accordionInternalElement+="<th>View Count</th>"; 
+									accordionInternalElement+="<th>Engagement</th>";
+
+								for(let j = 0; j < giphyContentanalytics.length; j++)
+								{ 
+									if(giphyContentList[i].content_id == giphyContentanalytics[j].content_id)
+									{ 
+										accordionInternalElement += "<tr>"+ 
+											"<td>" +giphyContentanalytics[j].query_timestamp + "</td>"+
+											"<td>" +giphyContentanalytics[j].content_id + "</td>"+
+											"<td>" +giphyContentanalytics[j].view_count + "</td>"+ 
+											"<td>" +giphyContentanalytics[j].engagement + "</td></tr>";
+									}
+								}
+								accordionInternalElement += "</table>"; 
+							}
+							 
+
+							let title = giphyContentList[i].content_id + ' - ' + giphyContentList[i].content_type;
+							if(title.length > 139) title = title.substr(0, 137) + "...";
+							let newData =  '<h3 class="accordion">' + title + '</h3><div class="panel"><p>'+ accordionInternalElement +'</p></div>'; 
+
+							giphyData += newData;
+						} 
+
+						document.getElementById('giphyContent_userStats').innerHTML = giphyData;   
+					}
+					else
+					{
+						document.getElementById('giphyContent_userStats').innerHTML = "No data available for <b>" + savedUsername + "</b> yet! <br> <br>"; 
+					}
+					
 					SetAllAccordions(); 
 				}
   
@@ -771,18 +820,19 @@
 					xhttp.setRequestHeader("Content-type", "application/json");
 					xhttp.setRequestHeader("x-apikey", databaseK);
 					xhttp.send(null); 
-					const json = xhttp.responseText;
+					
+					const json = xhttp.responseText;  
 					const obj = JSON.parse(json);
 
 					let userData = [];
 					let index = 0;
 					for(let i = 0; i < obj.length; i++)
 					{
-						if(obj[i].username === savedUsername) 
-						{  
+						if(_username === "" || obj[i].username === savedUsername)
+						{
 							userData[index] = obj[i];//JSON.stringify(obj[i]);
 							index++;
-						} 
+						}  
 					}
  
 					if(index == 0) 
@@ -794,6 +844,7 @@
 						return userData;
 					} 	
 				}
+
 														
 			</script> 
 			
