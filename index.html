@@ -1,116 +1,91 @@
-<!DOCTYPE html>
-<html>
-<title>Notelos Ltd</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/style.css">
-<body>
-    <style>
-        body{
-            background-color: #935d8c;
-            background-image: url("images/background/overlay.png"), -moz-linear-gradient(45deg, # 15%, #AFC9DC 85%);
-            background-image: url("images/background/overlay.png"), -webkit-linear-gradient(45deg, #AFC9DC 15%, #AFC9DC 85%);
-            background-image: url("images/background/overlay.png"), -ms-linear-gradient(45deg, #AFC9DC 15%, #AFC9DC 85%);
-            background-image: url("images/background/overlay.png"), linear-gradient(45deg, #AFC9DC 15%, #AFC9DC 85%);
-        }
-        h1,p {
-            font-family: Arial, Helvetica, sans-serif;
-            color:white;
-        }
-    </style>
-    <div class="w3-content w3-padding" style="max-width:1564px">
-        <div class="center">
-            <img src="images/logo/notelosLogo.png"><br><br>
-            <h1>NOTELOS</h1>
-            <p>Good ideas last forever!</p>
-        </div>
-      <div class="w3-container w3-padding-32" id="projects"> </div>
-      <div class="w3-row-padding">
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-              <div class="w3-display-topleft w3-black w3-padding">AR R&D</div>
-            <a href = "/ARR&D"><img src="/images/work/thumbnails/ARRandD.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-              <div class="w3-display-topleft w3-black w3-padding">Speech Intensity</div>
-            <a href = "/speech-intensity" target="_blank"><img src="/images/work/thumbnails/speech-intensity.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-            <div class="w3-display-topleft w3-black w3-padding">UberReflections</div>
-            <a href = "/uber-reflections"><img src="/images/work/thumbnails/uber-reflections.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-            <div class="w3-display-topleft w3-black w3-padding">Foveated Rendering</div>
-            <a href = "/foveated-rendering"><img src="/images/work/thumbnails/foveated-rendering.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
-      </div>
-        
-      <div class="w3-row-padding">
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-display-container">
-          <div class="w3-display-topleft w3-black w3-padding">Pterosaur</div>
-          <a href = "/pterosaur"><img src="/images/work/thumbnails/pterosaur.jpg" style="width:100%" class = "portfolio-image"></a>
-        </div>
-      </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-            <div class="w3-display-topleft w3-black w3-padding">Zen Builda - Android game</div>
-            <a href = "/zen-build"><img src="/images/work/thumbnails/zen-build.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-            <div class="w3-display-topleft w3-black w3-padding">Typewriter - Python app</div>
-            <a href = "/typewriter" target="_blank"><img src="/images/work/thumbnails/typewriter.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-            <div class="w3-display-topleft w3-black w3-padding">AR Container Houses Web App</div>
-            <a href = "/home" target="_blank"><img src="/images/work/thumbnails/home.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
-      </div>
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Notelos Limited is a tech agnostic creative agency">
+    <meta name="author" content="Notelos Limited"> 
+    <title>Notelos | Creative Agency</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="css/style.css" rel="stylesheet">  
+    <link href="css/alt-header-col.css" rel="stylesheet"> 
+  </head>
 
-      <div class="w3-row-padding">
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-display-container">
-          <div class="w3-display-topleft w3-black w3-padding">AR Plants app</div>
-          <a href = "/plant"><img src="/images/work/thumbnails/plant.jpg" style="width:100%" class = "portfolio-image"></a>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-display-container">
-          <div class="w3-display-topleft w3-black w3-padding">Parliament gender distribution web app</div>
-          <a href = "/parliament"><img src="/images/work/thumbnails/parliament.jpg" style="width:100%" class = "portfolio-image"></a>
-        </div>
-      </div>
-      <div class="w3-col l3 m6 w3-margin-bottom">
-        <div class="w3-display-container">
-          <div class="w3-display-topleft w3-black w3-padding">XR app to explore MRI data</div>
-          <a href = "/MRIXR"><img src="/images/work/thumbnails/mrixr.jpg" style="width:100%" class = "portfolio-image"></a>
-        </div>
-      </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-display-container">
-            <div class="w3-display-topleft w3-black w3-padding">Smaller projects</div>
-            <a href = "/old"><img src="/images/work/thumbnails/old.jpg" style="width:100%" class = "portfolio-image"></a>
-          </div>
-        </div>
+  <body>  
 
-        </div>
-      </div>
+    <div id="navbar"></div>
+  
+    <div class = "absolute-label">
+      <h1 class ="font-type-2">We are a creative agency that strives to make a lasting impression whilst pushing the boundaries of what's possible with <span id='text'></span><div class='console-underscore' id='console'>&#95;</div></h1> 
+      <br><br>  
+      <h3>
+        <a href="javascript:var reelVideoRef = document.getElementById('reel-video');RequestFullScreen();" class = "underlineOnHover"> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-play-btn" viewBox="0 0 16 16" style = "padding-bottom: 4px;">
+          <path d="M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5z"/>
+          <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+        </svg> 
+          Watch our Showreel
+        </a>
+      </h3>   
     </div>
-    <br><br>
-    <div id="footer"></div>
-</body>
-<script type="text/javascript" src="code/jquery.min.js"></script>
-<script type="text/javascript" src="code/reuseElements.js"></script>
+ 
+    <div class="video-background-holder">
+      <div class="video-background-overlay"></div> 
+      <video width="100%" height="100%" id="reel-video" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+        <source src="videos/reel2022_LD.mp4" type="video/mp4">
+        <!--source src="videos/reel2022_LD.webm" type="video/webm"-->
+      </video>
+    </div> 
+
+    <section class="py-5">
+      <div class="container py-5">
+        <h3 style = "text-align: center;">
+          Through the years we've had numerous clients:
+        </h3> 
+        <div class="row"> 
+          <img class="clients-element" src="images/clients/1-min.png"> 
+          <img class="clients-element" src="images/clients/2-min.png">
+          <img class="clients-element" src="images/clients/3-min.png">
+          <img class="clients-element" src="images/clients/4-min.png">
+          <img class="clients-element" src="images/clients/5-min.png">
+          <img class="clients-element" src="images/clients/6-min.png">
+          <img class="clients-element" src="images/clients/7-min.png">
+          <img class="clients-element" src="images/clients/8-min.png">
+          <img class="clients-element" src="images/clients/9-min.png">
+          <img class="clients-element" src="images/clients/10-min.png">
+          <img class="clients-element" src="images/clients/11-min.png">
+          <img class="clients-element" src="images/clients/12-min.png">
+          <img class="clients-element" src="images/clients/13-min.png">
+          <img class="clients-element" src="images/clients/14-min.png">
+          <img class="clients-element" src="images/clients/15-min.png">
+          <img class="clients-element" src="images/clients/16-min.png">
+          <img class="clients-element" src="images/clients/17-min.png">
+          <img class="clients-element" src="images/clients/18-min.png">
+          <img class="clients-element" src="images/clients/19-min.png">
+          <img class="clients-element" src="images/clients/20-min.png">
+          <!--img class="clients-element" src="images/clients/21.png"-->
+          <img class="clients-element" src="images/clients/22-min.png">
+          <img class="clients-element" src="images/clients/23-min.png">
+          <img class="clients-element" src="images/clients/24-min.png">
+          <img class="clients-element" src="images/clients/25-min.png"> 
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="container py-5">
+        <p class="lead" style = "text-align:center;">To read more about Notelos visit our  <a href = "about" class = "reddenOnHover">about page</a> and if you're interested in checking out our projects take a look at our  <a href = "portfolio" class = "reddenOnHover">portfolio</a>.<a href = "#portfolio"></a></p>
+        <br>
+        <p class="lead" style = "text-align:center;">If you'd like to get in touch and discuss your ideas feel free to send us an email: <a href = "mailto: contact@notelos.co" class = "reddenOnHover">contact@notelos.co</a></p>
+      </div> 
+    </section>
+ 
+    <div id="footer"></div> 
+
+  </body>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/reuseElements.js"></script> 
+  <script type="text/javascript" src="js/reelFullScreen.js"></script>
+  <script type="text/javascript" src="js/typewriterEffect.js"></script>
 </html>
