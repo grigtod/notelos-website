@@ -1,1 +1,22 @@
-var _0x6adf89=_0x1145;function _0x1145(_0x4ffe4d,_0xa9f86b){var _0x26f9bc=_0x26f9();return _0x1145=function(_0x11451e,_0x5ae60e){_0x11451e=_0x11451e-0x133;var _0x9dcc6f=_0x26f9bc[_0x11451e];return _0x9dcc6f;},_0x1145(_0x4ffe4d,_0xa9f86b);}(function(_0x2ea943,_0xf39d5f){var _0x1d7dd7=_0x1145,_0x25254f=_0x2ea943();while(!![]){try{var _0x4fb49b=-parseInt(_0x1d7dd7(0x135))/0x1*(parseInt(_0x1d7dd7(0x142))/0x2)+-parseInt(_0x1d7dd7(0x143))/0x3*(-parseInt(_0x1d7dd7(0x13f))/0x4)+parseInt(_0x1d7dd7(0x133))/0x5*(-parseInt(_0x1d7dd7(0x145))/0x6)+-parseInt(_0x1d7dd7(0x13c))/0x7*(parseInt(_0x1d7dd7(0x144))/0x8)+-parseInt(_0x1d7dd7(0x137))/0x9+parseInt(_0x1d7dd7(0x13e))/0xa*(parseInt(_0x1d7dd7(0x13b))/0xb)+-parseInt(_0x1d7dd7(0x134))/0xc*(-parseInt(_0x1d7dd7(0x146))/0xd);if(_0x4fb49b===_0xf39d5f)break;else _0x25254f['push'](_0x25254f['shift']());}catch(_0x2dcb02){_0x25254f['push'](_0x25254f['shift']());}}}(_0x26f9,0x227a5),document[_0x6adf89(0x140)](_0x6adf89(0x13a),function(){OnCancelFullscreen();}),document[_0x6adf89(0x140)](_0x6adf89(0x13d),function(){OnCancelFullscreen();}),document[_0x6adf89(0x140)]('webkitfullscreenchange',function(){OnCancelFullscreen();}),document[_0x6adf89(0x140)](_0x6adf89(0x148),function(){OnCancelFullscreen();}));function OnCancelFullscreen(){var _0x166b4e=_0x6adf89;reelVideoRef[_0x166b4e(0x136)]=!reelVideoRef[_0x166b4e(0x136)];}function RequestFullScreen(){var _0x5819fa=_0x6adf89;console['log'](_0x5819fa(0x141)),reelVideoRef['currentTime']=0x0;if(reelVideoRef['requestFullscreen'])reelVideoRef['requestFullscreen']();else{if(reelVideoRef['mozRequestFullScreen'])reelVideoRef[_0x5819fa(0x139)]();else{if(reelVideoRef[_0x5819fa(0x147)])reelVideoRef[_0x5819fa(0x147)]();else reelVideoRef['msRequestFullscreen']&&reelVideoRef[_0x5819fa(0x138)]();}}}function _0x26f9(){var _0x28d929=['1373545LQSrjz','60qrxQcv','1TpNlVW','muted','474687vwsVcS','msRequestFullscreen','mozRequestFullScreen','fullscreenchange','1092377iKatcG','7dWsEwa','mozfullscreenchange','10XKWZuy','18364iQJXQS','addEventListener','Requesting\x20fullscreen!','481022GNVkUa','138YjKpsw','1574512vkMoYh','6vEYzKb','1548313bMWEns','webkitRequestFullscreen','msfullscreenchange'];_0x26f9=function(){return _0x28d929;};return _0x26f9();}
+//Reel fullscreen:
+ 
+document.addEventListener("fullscreenchange", function() { OnCancelFullscreen(); });
+document.addEventListener("mozfullscreenchange", function() { OnCancelFullscreen(); });
+document.addEventListener("webkitfullscreenchange", function() { OnCancelFullscreen(); });
+document.addEventListener("msfullscreenchange", function() { OnCancelFullscreen(); });
+
+function OnCancelFullscreen()
+{ 
+  reelVideoRef.muted = !reelVideoRef.muted;
+}
+ 
+function RequestFullScreen()
+{
+  console.log("Requesting fullscreen!"); 
+  //videoRef.muted = false;
+  reelVideoRef.currentTime = 0;
+  if (reelVideoRef.requestFullscreen) { reelVideoRef.requestFullscreen(); } 
+  else if (reelVideoRef.mozRequestFullScreen) { reelVideoRef.mozRequestFullScreen(); } 
+  else if (reelVideoRef.webkitRequestFullscreen) { reelVideoRef.webkitRequestFullscreen(); } 
+  else if (reelVideoRef.msRequestFullscreen) { reelVideoRef.msRequestFullscreen(); } 
+}

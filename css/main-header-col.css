@@ -1,2 +1,15 @@
-/* OBFUSCATED BY CSSOBFUSCATOR.COM at 2022/11/27 17:28:56 */
-[class~=underlineOnHover]:after{border-bottom-width:medium;}[class~=underlineOnHover]:after{border-bottom-style:solid;}[class~=underlineOnHover]:after{border-bottom-color:#000;}[class~=underlineOnHover]:after{border-image:none;}[class~=underlineOnHover]:hover,[class~=underlineOnHover],.header-color{color:#000;}
+.header-color{
+    color:rgb(0, 0, 0);
+}
+
+.underlineOnHover {
+    color: #000000; 
+}
+
+.underlineOnHover:hover {
+    color: rgb(0, 0, 0); 
+}
+
+.underlineOnHover:after {   
+    border-bottom: solid #000000;
+}
