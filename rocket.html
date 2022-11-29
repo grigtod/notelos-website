@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Notelos Limited is a tech agnostic creative agency">
+    <meta name="author" content="Notelos Limited"> 
+    <title>Notelos Rockets</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="css/style.css" rel="stylesheet">   
+    <link href="css/main-header-col.css" rel="stylesheet"> 
+    <link href="css/carousel.css" rel="stylesheet">      
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+  </head>
+
+  <body>  
+    <div id="navbar"></div> 
+ 
+    <br><br><br><br>
+    <div class="container py-5">   
+      <h2>SLS vs Saturn V</h2>   
+    </div>
+
+
+    <div id="unity-container-artemis" class="unity-desktop" style = "text-align:center;">
+      <canvas id="unity-canvas-artemis" width=960 height=600></canvas>
+      <div id="unity-loading-bar-artemis">
+        <div id="unity-logo-artemis"></div>
+        <div id="unity-progress-bar-empty-artemis">
+          <div id="unity-progress-bar-full-artemis"></div>
+        </div>
+      </div>
+      <div id="unity-warning-artemis"> </div>
+      <div id="unity-footer-artemis">  
+      </div>
+    </div>
+
+    <div id="unity-container-saturn" class="unity-desktop"  style = "text-align:center;">
+      <canvas id="unity-canvas-saturn" width=960 height=600></canvas>
+      <div id="unity-loading-bar-saturn">
+        <div id="unity-logo-saturn"></div>
+        <div id="unity-progress-bar-empty-saturn">
+          <div id="unity-progress-bar-full-saturn"></div>
+        </div>
+      </div>
+      <div id="unity-warning-saturn"> </div>
+      <div id="unity-footer-saturn">  
+      </div>
+    </div>
+
+    <div class="container py-5">   
+      <p>The prospect of visiting the moon once again makes us very excited. Please use the above viewers to compare the Space Launch System from the Artemis 1 mission with the Saturn V from the Apollo 11 mission. </p>  
+      <p>Use the side scrolls to rotate the rocket, the scroll at the bottom to expand it and the 3 buttons to change mode. If you hoover over a component you will see a label with it's name. If you press and hold your left mouse button a magnifying glass will appear. </p>    
+      <p>This webpage is not designed to work on a phone. If you're on a device that cannot display the above content you can see how it works on YouTube: </p>   
+      <p>If you'd like us to develop a similar web viewer for you please contact us at: <a href = "mailto: contact@notelos.co" class = "reddenOnHover">contact@notelos.co</a></p>
+    </div>
+
+    <div id="footer"></div> 
+
+  </body>
+ 
+  <script type="text/javascript" src="js/reuseElements.js"></script>   
+  <script type="text/javascript" src="/rockets/rockets.js"></script>   
+</html>
