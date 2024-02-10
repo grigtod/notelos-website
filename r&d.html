@@ -21,6 +21,26 @@
     <div class="container py-5">   
       <h2>Research and Development</h2>  
 
+      <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5 border-bottom">
+          <div class="w3-col l6 m6 w3-margin-bottom">
+              <div class="w3-display-container">
+                  <h4>SEAMless</h4> 
+                  Data Viz app for the NOC AH-1 submarine. It uses Unreal Engine to display point cloud data captured by state of the art Vaarst sensors.
+              </div>
+          </div>
+          <div class="gallery-container">
+              <div class="gallery-numbertext" id="slidesIDseamless-number"></div>
+              <div class="gallery-Slides slidesIDseamless-Slide video-container">
+                  <iframe width="500" height="294" src="https://www.youtube.com/embed/ZXmOEOAKnzc?rel=0&enablejsapi=1&version=3&playerapiid=ytplayer" frameborder="0" allowfullscreen></iframe>
+              </div>
+              <div class="gallery-Slides slidesIDseamless-Slide video-container" ">
+                  <iframe width="500" height="294" src="https://www.youtube.com/embed/Fouy11tBZ90?rel=0&enablejsapi=1&version=3&playerapiid=ytplayer" frameborder="0" allowfullscreen></iframe>
+              </div>
+              <a id="slidesIDseamless-gallery-prev" class="gallery-prev"> <div class="gallery-arrowLeft"> ❮ </div></a>
+              <a id="slidesIDseamless-gallery-next" class="gallery-next"> <div class="gallery-arrowRight"> ❯ </div></a>
+          </div>
+      </div>
+
       <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5 border-bottom"> 
         <div class="w3-col l6 m6 w3-margin-bottom">
           <div class="w3-display-container">
@@ -94,7 +114,8 @@
     </div>
 
     <script> 
-      DefineSlides("slidesID1");    
+        DefineSlides("slidesID1");
+        DefineSlides("slidesIDseamless");    
     </script>
  
     <div id="footer"></div> 
